@@ -1,0 +1,56 @@
+.cabeceraJuegos {
+    position: relative;
+    height: 1080px;
+    background-color: #272727;
+  }
+  
+  .fondo-container {
+    position: relative;
+  }
+
+  .fondo-imagen{
+    transition: opacity 0.5s ease;
+    max-width: 1920px;
+    max-height: 1080px;
+    width: 100%;
+    height: auto;
+  }
+
+  .botones-container {
+    position: absolute;
+    bottom: 10px; /* Ajusta la posición vertical */
+    left: 0; /* Ajusta la posición horizontal */
+    right: 0;
+    text-align: center;
+  }
+  
+  .boton {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin: 0 5px;
+  }
+  
+  .boton-activo {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    margin: 0 5px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+  }
+  
+  .boton-inactivo {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: #cccccc;
+    margin: 0 5px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+  }
+  
+  

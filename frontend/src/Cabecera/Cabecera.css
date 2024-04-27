@@ -4,6 +4,11 @@
     justify-content: space-between;
     align-items: center;
     font-family: Kanit;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000; /* Asegura que la cabecera esté por encima del contenido */
+    width: 100%;
   }
   
   .cabecera div{
@@ -144,4 +149,55 @@
   transform: scale(1.5); /* Ajusta el valor según el tamaño deseado */
   transition: transform 0.3s ease;
   color: orange;
+}
+
+/*Barra de búsqueda*/
+
+.buscar {
+    position: relative;
+    padding: 5px;
+  }
+  
+  .buscar input {
+    width: 0;
+    height: 40px;
+    padding: 0 20px;
+    font-size: 18px;
+    color: #222;
+    outline: none;
+    border: 1px solid silver;
+    border-radius: 30px;
+    transition: all 0.6s ease;
+  }
+  
+  .btn {
+    width: 55px;
+    height: 55px;
+    line-height: 55px;
+    top: 0;
+    right: 0;
+    position: absolute;
+    background: linear-gradient(to top, #FE7207, #FF4500);
+    text-align: center;
+    color: white;
+    font-size: 18px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  
+  .buscar:hover input {
+    width: 240px;
+  }
+  
+  .buscar input:focus {
+    width: 240px;
+  }
+
+.lupa{
+    margin: auto;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
 }
