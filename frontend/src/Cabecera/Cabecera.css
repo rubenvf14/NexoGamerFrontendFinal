@@ -1,0 +1,147 @@
+.cabecera{
+    background-color: #272727;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: Kanit;
+  }
+  
+  .cabecera div{
+    display: flex;
+    align-items: center;
+    color: white;
+    font-size: 15pt;
+  }
+  
+  .cabecera div img{
+    transition: transform 1s ease;
+    margin: 10px;
+  }
+  
+  .cabecera div img:hover{
+    animation: moverIcono 1s ease;
+    box-shadow: 0 0 10px white;
+    border-radius: 60%;
+  }
+  
+  @keyframes moverIcono{
+    from{
+      transform: rotateX(0deg);
+    }
+    to{
+      transform: rotateX(360deg);
+    }
+  }
+  
+  /* Estilos del texto */
+  .cabecera div h1 {
+    display: inline-block;
+    text-decoration: none;
+    color: white;
+    position: relative;
+  }
+  
+  /* Estilo de la línea */
+  .cabecera div h1::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -10px;
+    width: 0;
+    height: 5px;
+    background-color: white;
+    transition: width 0.3s;
+    transform: translateX(-50%);
+  }
+  
+  /* Animación al pasar el ratón */
+  .cabecera div h1:hover::after {
+    width: 100%;
+  }
+
+  .menu{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  ul{
+    list-style-type: none;
+  }
+
+  .menu ul li{
+    display: inline;
+    margin-right: 80px;
+    font-size: 20pt;
+  }
+
+  /* Estilos del texto */
+  .menu ul li {
+    display: inline-block;
+    text-decoration: none;
+    color: white;
+    position: relative;
+  }
+  
+  /* Estilo de la línea */
+  .menu ul li::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -10px;
+    width: 0;
+    height: 5px;
+    background-color: white;
+    transition: width 0.3s;
+    transform: translateX(-50%);
+  }
+  
+  /* Animación al pasar el ratón */
+  .menu ul li:hover::after {
+    width: 100%;
+  }
+
+  .right-to-bracket, .user, .cart-shopping{
+    width: 30px;
+    height: 30px;
+  }
+  
+  .registrarse, .login, .carrito{
+    display: flex;
+    flex-direction: column;
+    margin-right: 30px;
+    white-space: nowrap;
+  }
+
+  .iconos .registrarse p,  .iconos .login p, .iconos .carrito p{
+    display: inline-block;
+    text-decoration: none;
+    color: white;
+    position: relative;
+  }
+
+/* Estilo de la línea */
+.iconos .registrarse p::after, .iconos .login p::after, .iconos .carrito p::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -10px;
+    width: 0;
+    height: 5px;
+     background-color: white;
+    transition: width 0.3s;
+    transform: translateX(-50%);
+}
+
+  /* Animación al pasar el ratón */
+  .iconos .registrarse p:hover::after,  .iconos .login p:hover::after, .iconos .carrito p:hover::after {
+    width: 100%;
+  }
+
+.iconos .registrarse:hover .right-to-bracket,
+.iconos .login:hover .user,
+.iconos .carrito:hover .cart-shopping {
+  transform: scale(1.5); /* Ajusta el valor según el tamaño deseado */
+  transition: transform 0.3s ease;
+  color: orange;
+}
