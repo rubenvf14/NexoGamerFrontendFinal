@@ -1,7 +1,8 @@
 .cabeceraJuegos {
     position: relative;
-    height: 1080px;
+    height: 1200px;
     background-color: #272727;
+    margin-top: 100px;
   }
   
   .fondo-container {

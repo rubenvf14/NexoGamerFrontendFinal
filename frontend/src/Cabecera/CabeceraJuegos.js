@@ -22,6 +22,7 @@ function CabeceraJuegos() {
         }
         const data = await response.json();
         setJuegos(data);
+        console.log(data);
         if (data.length > 0 && !fondoUrl) {
           setFondoUrl(data[0].urlImagen); // Establece la primera imagen
         }
@@ -29,25 +30,48 @@ function CabeceraJuegos() {
         console.error('Error al obtener los juegos del backend:', error);
       }
     };
-
+  
     fetchData();
-
-    const interval = setInterval(() => {
+  }, []); // Ejecuta una vez al montar el componente
+  
+  useEffect(() => {
+    const intervalId = setInterval(() => {
       if (juegos.length > 0) {
         const nextIndex = (indiceImagen + 1) % juegos.length;
         setIndiceImagen(nextIndex);
-        setImageLoading(true); // Mostrar indicador de carga
-        setOpacity(0); // Cambia la opacidad a 0
-        setTimeout(() => {
-          setFondoUrl(juegos[nextIndex].urlImagen);
-          setOpacity(1); // Cambia la opacidad a 1 después de que cambie la imagen
-          setImageLoading(false); // Ocultar indicador de carga
-        }, 500); // Espera 500 ms antes de cambiar la imagen para que la transición sea visible
       }
     }, 5000);
-
-    return () => clearInterval(interval);
-  }, [indiceImagen]);
+  
+    return () => clearInterval(intervalId); // Limpia el intervalo al desmontar el componente
+  }, [indiceImagen, juegos]); // Ejecuta cada vez que indiceImagen o juegos cambian
+  
+  useEffect(() => {
+    if (juegos.length > 0) {
+      setImageLoading(true); // Mostrar indicador de carga
+      setOpacity(0); // Cambia la opacidad a 0
+      setTimeout(() => {
+        setFondoUrl(juegos[indiceImagen].urlImagen);
+        setOpacity(1); // Cambia la opacidad a 1 después de que cambie la imagen
+        setImageLoading(false); // Ocultar indicador de carga
+      }, 500); // Espera 500 ms antes de cambiar la imagen para que la transición sea visible
+    }
+  }, [indiceImagen, juegos]); // Ejecuta cada vez que indiceImagen o juegos cambian
+  
+  
+  
+  useEffect(() => {
+    if (juegos.length > 0) {
+      setImageLoading(true); // Mostrar indicador de carga
+      setOpacity(0); // Cambia la opacidad a 0
+      setTimeout(() => {
+        setFondoUrl(juegos[indiceImagen].urlImagen);
+        setOpacity(1); // Cambia la opacidad a 1 después de que cambie la imagen
+        setImageLoading(false); // Ocultar indicador de carga
+      }, 500); // Espera 500 ms antes de cambiar la imagen para que la transición sea visible
+    }
+  }, [indiceImagen, juegos]); // Ejecuta el efecto solo cuando indiceImagen o juegos cambien
+  
+  
 
   const cambiarImagen = (index) => {
     setIndiceImagen(index);
