@@ -117,7 +117,7 @@ function CabeceraJuegos() {
                     <img src={juego.urlImagen} alt='foto' className='miniCarteleras' key={key}></img>
                     <div className='texto'>
                         <p className="nombre">{juego.nombre}</p>
-                        <p className='precio'>{juego.precio}€</p>
+                        { juego.precio === "0.00" ? <p className="precio">Gratuito</p> : <p className="precio">{juego.precio}€</p> }
                     </div>
                 </div>
               ))}
