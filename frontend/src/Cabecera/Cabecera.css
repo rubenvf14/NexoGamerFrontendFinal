@@ -10,6 +10,18 @@
     z-index: 1000;
     width: 100%;
   }
+
+/* Estilo para la cabecera cuando se hace scroll */
+.cabecera.scroll {
+  background-color: black; /* Cambia al color negro cuando se hace scroll */
+  transition: background-color 0.3s; /* Agrega una transición suave */
+}
+
+/* Estilo para la cabecera cuando se vuelve a hacer scroll hacia arriba */
+.cabecera.scrolled {
+  background-color: #272727; /* Vuelve al color original cuando se hace scroll hacia arriba */
+  transition: background-color 0.3s; /* Agrega una transición suave */
+}
   
   .cabecera div{
     display: flex;
@@ -204,3 +216,61 @@
     display: flex;
     flex-direction: column;
 }
+
+.lupa-container {
+  transition: all 0.3s ease;
+}
+
+.lupa-container.move {
+  transform: translateX(-100%);
+}
+
+h1.hide {
+  opacity: 0;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.container.hide {
+  opacity: 0;
+  pointer-events: none;
+  display: none;
+}
+
+.menu {
+  height: 100%;
+}
+
+.menu .container {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.menu .container.center {
+  align-items: center;
+}
+
+.buscar.hide {
+  display: none;
+}
+
+.menu ul {
+  transition: transform 0.3s ease;
+  transform: translateY(40%);
+}
+
+.menu ul.scrolled-up {
+  transform: translateY(-20%);
+  transition: transform 0.3s ease;
+}
+
+
+
+
