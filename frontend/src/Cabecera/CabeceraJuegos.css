@@ -57,8 +57,12 @@
 
 .generalBody{
   color: white;
-  margin-left: 18%;
-  margin-right: 18%;
+  margin-left: 17%;
+  margin-right: 17%;
+}
+
+.generalBody h1{
+  cursor: pointer;
 }
 
 .flecha{
@@ -66,9 +70,8 @@
   font-size: 20pt;
 }
 
-.flecha:hover{
+.generalBody h1:hover .flecha{
   color: white;
-  cursor: pointer;
 }
 
 .carteleraJuegos{
@@ -94,6 +97,7 @@
 .texto{
   display: flex;
   justify-content: space-between;
+  margin-top: 10px;
 }
 
 .precio{
