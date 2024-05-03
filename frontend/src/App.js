@@ -8,9 +8,9 @@ function App() {
     <div className="NexoGamer">
       <BrowserRouter>
          <Routes>
-          <Route path="/" element={<Inicio></Inicio>}>
-              <Route path="juegosNombre/:juego" element={<JuegosNombre></JuegosNombre>}></Route>
-          </Route>
+          <Route index element={<Inicio></Inicio>}></Route>
+          <Route path="/inicio" element={<Inicio></Inicio>}></Route>
+          <Route path="juegosNombre/:juego" element={<JuegosNombre></JuegosNombre>}></Route>
          </Routes>
       </BrowserRouter>
     </div>

@@ -7,7 +7,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 1000; /* Asegura que la cabecera esté por encima del contenido */
+    z-index: 1000;
     width: 100%;
   }
   
@@ -72,6 +72,7 @@
 
   ul{
     list-style-type: none;
+    cursor: pointer;
   }
 
   .menu ul li{
@@ -123,6 +124,7 @@
     text-decoration: none;
     color: white;
     position: relative;
+    cursor: pointer;
   }
 
 /* Estilo de la línea */
@@ -149,6 +151,7 @@
   transform: scale(1.5); /* Ajusta el valor según el tamaño deseado */
   transition: transform 0.3s ease;
   color: orange;
+  cursor: pointer;
 }
 
 /*Barra de búsqueda*/

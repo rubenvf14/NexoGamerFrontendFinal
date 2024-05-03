@@ -1,8 +1,7 @@
 .cabeceraJuegos {
     position: relative;
-    height: 1200px;
+    height: 1100px;
     background-color: #272727;
-    margin-top: 100px;
   }
   
   .fondo-container {
@@ -54,4 +53,54 @@
     cursor: pointer;
   }
   
-  
+  /*Estilos para el contenedor general del body de la página de inicio*/
+
+.generalBody{
+  color: white;
+  margin-left: 15%;
+  margin-right: 15%;
+}
+
+.flecha{
+  color: grey;
+  font-size: 20pt;
+}
+
+.flecha:hover{
+  color: white;
+  cursor: pointer;
+}
+
+.carteleraJuegos{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.miniCarteleras{
+    width: 380px;
+    height: 220px;
+    flex-basis: calc(33.33% - 20px);
+    margin-right: 20px;
+    cursor: pointer;
+    border-radius: 15px;
+}
+
+.texto{
+  display: flex;
+  justify-content: space-between;
+}
+
+.precio{
+  margin-top: 0;
+  margin-right: 20px;
+  font-size: 15pt;
+  font-weight: 600;
+}
+
+.nombre{
+  margin-top: 5px;
+  font-weight: 600;
+  font-size: 13pt;
+}

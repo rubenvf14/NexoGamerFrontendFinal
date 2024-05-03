@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './CabeceraJuegos.css'; // Importa el archivo de estilos CSS
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { icon } from '@fortawesome/fontawesome-svg-core/import.macro'
 
 function CabeceraJuegos() {
   const [fondoUrl, setFondoUrl] = useState('');
@@ -84,7 +86,7 @@ function CabeceraJuegos() {
     }, 500); // Espera 500 ms antes de cambiar la imagen para que la transición sea visible
   };
 
-  return (
+  return (<>
     <div className='cabeceraJuegos'>
       <div className='fondo-container'>
         {/* Imagen de fondo con transición de opacidad */}
@@ -107,7 +109,21 @@ function CabeceraJuegos() {
         </div>
       </div>
     </div>
-  );
+    <div className="generalBody">
+            <h1>Tendencias <FontAwesomeIcon className="flecha" icon={icon({ name: 'chevron-right', family: 'classic', style: 'solid' })} /></h1>
+            <div className="carteleraJuegos">
+              {juegos.map((juego, key) => (
+                <div className='juego'>
+                    <img src={juego.urlImagen} alt='foto' className='miniCarteleras' key={key}></img>
+                    <div className='texto'>
+                        <p className="nombre">{juego.nombre}</p>
+                        <p className='precio'>{juego.precio}€</p>
+                    </div>
+                </div>
+              ))}
+            </div>
+        </div>
+  </>);
 }
 
 export default CabeceraJuegos;

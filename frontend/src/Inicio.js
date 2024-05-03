@@ -1,7 +1,5 @@
-import Cabecera from "./Cabecera/Cabecera";
 import "./App.css";
-import JuegosNombre from "./JuegosNombre/JuegosNombre";
-import CabeceraJuegos from "./Cabecera/CabeceraJuegos";
+import Cabecera from "./Cabecera/Cabecera";
 
 const Inicio = () => {
 

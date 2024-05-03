@@ -7,7 +7,7 @@ const JuegosNombre = () => {
     const [juego, setJuego] = useState([]);
 
   return (
-    <>
+    <div className='generalContainer'>
         <CabeceraGlobal></CabeceraGlobal>
         <div className='carteleraJuegos'>
             {juego.map((juego) => (
@@ -16,7 +16,7 @@ const JuegosNombre = () => {
                 </div>
                 ))}
             </div>
-        </>
+        </div>
     );
 };
 

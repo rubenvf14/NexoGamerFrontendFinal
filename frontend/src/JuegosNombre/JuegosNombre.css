@@ -1,0 +1,9 @@
+body{
+    background-color: #272727;
+}
+
+.carteleraJuegos{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

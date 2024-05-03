@@ -10,6 +10,7 @@ import read_dead_dedemption_vid from "../trailers/rdr2.mp4";
 import sea_of_thieves_vid from "../trailers/Sea_of_Thieves.mp4";
 import valorant_vid from "../trailers/VALORANT.mp4";
 import victory_road_vid from "../trailers/Victory_Road.mp4";
+import f1 from "../trailers/F1_2024.mp4";
 import '../JuegosNombre/JuegosNombre.css';
 
 const JuegoConTrailer = ({ juego, id }) => {
@@ -48,6 +49,9 @@ const JuegoConTrailer = ({ juego, id }) => {
                 setReproduciendo(true);
                 break;
             case "Inazuma Eleven: Heroes Victory Road":
+                setReproduciendo(true);
+                break;
+            case "Fórmula 1 2024":
                 setReproduciendo(true);
                 break;
             default:
@@ -96,6 +100,8 @@ const renderVideo = (nombreJuego) => {
             return <video src={valorant_vid} className='trailer' autoPlay muted loop />;
         case "Inazuma Eleven: Heroes Victory Road":
             return <video src={victory_road_vid} className='trailer' autoPlay muted loop />;
+        case "Fórmula 1 2024":
+            return <video src={f1} className='trailer' autoPlay muted loop />;
         default:
             return null;
     }
