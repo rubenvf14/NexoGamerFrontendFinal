@@ -10,6 +10,8 @@ body {
     overflow: hidden; /* Para ocultar el desbordamiento del video */
     transition: transform 0.5s ease; /* Agrega una transición suave */
     cursor: pointer;
+    border-radius: 10px;
+    z-index: 1;
 }
 
 .juego-container video {
@@ -24,6 +26,7 @@ body {
 
 .juego-container:hover {
     transform: scale(1.1); /* Escala el contenedor al hacer hover */
+    box-shadow: 0 0 10px white;
 }
 
 .juego-container img {

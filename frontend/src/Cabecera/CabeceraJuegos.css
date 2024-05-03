@@ -112,3 +112,24 @@
   font-weight: 600;
   font-size: 13pt;
 }
+
+/*Aquí pondremos el descuento encima de la foto*/
+
+.contenedorImagen {
+  position: relative; /* Asegura que la posición de la etiqueta sea relativa a este contenedor */
+  display: inline-block; /* Para que el contenedor se ajuste al tamaño de la imagen */
+}
+
+.etiquetaNaranja {
+  position: absolute;
+  width: 45px;
+  text-align: center;
+  bottom: 4px; /* Coloca la etiqueta en la parte inferior */
+  left: 0; /* Coloca la etiqueta en la parte izquierda */
+  background-color: #FF5400; /* Color de fondo de la etiqueta */
+  padding: 5px; /* Ajusta el relleno según sea necesario */
+  color: white; /* Color del texto */
+  border-radius: 5px;
+  font-weight: 600;
+  cursor: pointer;
+}

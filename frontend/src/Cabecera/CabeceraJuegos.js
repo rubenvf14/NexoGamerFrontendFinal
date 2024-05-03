@@ -100,11 +100,14 @@ function CabeceraJuegos() {
             <div className='juego' key={key}>
               <div className='miniCartelera' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                 {reproduciendo && <JuegoConTrailer juego={juego} />} {/* Muestra el trailer si se está reproduciendo */}
-                <img src={juego.urlImagen} alt='foto' className='miniCarteleras'></img>
+                <div className='contenedorImagen'>
+                  <img src={juego.urlImagen} alt='foto' className='miniCarteleras'></img>
+                  {juego.rebaja !== 0 && <div className='etiquetaNaranja'>-{juego.rebaja}%</div>}
+              </div>
               </div>
               <div className='texto'>
                   <p className='nombre'>{juego.nombre}</p>
-                  { juego.precio === "0.00" ? <p className="precio">Gratuito</p> : <p className="precio">{juego.precio}€</p> }
+                  {juego.precio === "0.00" ? <p className="precio">Gratuito</p> : <p className="precio">{(juego.precio - (juego.precio * (juego.rebaja / 100))).toFixed(2)}€</p>}
               </div>
             </div>
           ))}
