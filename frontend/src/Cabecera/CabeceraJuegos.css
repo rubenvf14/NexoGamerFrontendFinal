@@ -2,6 +2,7 @@
     position: relative;
     height: 1100px;
     background-color: #272727;
+    font-family: Kanit;
   }
   
   .fondo-container {
@@ -60,18 +61,48 @@
   color: white;
   margin-left: 17%;
   margin-right: 17%;
+  margin-top: 20px;
 }
 
-.generalBody h1{
+.generalBody .tendencias{
   cursor: pointer;
+  display: inline;
+  text-decoration: none;
+  font-family: Kanit;
 }
+
+  /* Estilos del texto */
+  .generalBody .tendencias{
+    display: inline-block;
+    text-decoration: none;
+    color: white;
+    position: relative;
+  }
+  
+  /* Estilo de la línea */
+  .generalBody .tendencias::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -10px;
+    width: 0;
+    height: 5px;
+    background-color: white;
+    transition: width 0.3s;
+    transform: translateX(-50%);
+  }
+  
+  /* Animación al pasar el ratón */
+  .generalBody .tendencias:hover::after {
+    width: 100%;
+  }
 
 .flecha{
   color: grey;
   font-size: 20pt;
 }
 
-.generalBody h1:hover .flecha{
+.generalBody .tendencias:hover .flecha{
   color: white;
 }
 
@@ -80,6 +111,7 @@
   flex-wrap: wrap;
   justify-content: space-around;
   align-items: center;
+  margin-top: 20px;
 }
 
 .miniCarteleras{
@@ -93,6 +125,7 @@
 
 .juego{
   margin-bottom: 20px;
+  font-family: Kanit;
 }
 
 .texto{

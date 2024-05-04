@@ -94,7 +94,7 @@ function CabeceraJuegos() {
         </div>
       </div>
       <div className="generalBody">
-        <h1>Tendencias <FontAwesomeIcon className="flecha" icon={icon({ name: 'chevron-right', family: 'classic', style: 'solid' })} /></h1>
+        <h1 className='tendencias'>Tendencias <FontAwesomeIcon className="flecha" icon={icon({ name: 'chevron-right', family: 'classic', style: 'solid' })} /></h1>
         <div className="carteleraJuegos">
           {juegos.map((juego, key) => (
             <div className='juego' key={key}>

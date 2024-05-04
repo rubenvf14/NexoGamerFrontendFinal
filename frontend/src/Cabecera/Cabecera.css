@@ -122,6 +122,7 @@
   .right-to-bracket, .user, .cart-shopping{
     width: 30px;
     height: 30px;
+    margin-bottom: 10px;
   }
   
   .registrarse, .login, .carrito{
@@ -131,7 +132,7 @@
     white-space: nowrap;
   }
 
-  .iconos .registrarse p,  .iconos .login p, .iconos .carrito p{
+  .iconos .registrarse .texto,  .iconos .login .texto, .iconos .carrito .texto{
     display: inline-block;
     text-decoration: none;
     color: white;
@@ -140,7 +141,7 @@
   }
 
 /* Estilo de la línea */
-.iconos .registrarse p::after, .iconos .login p::after, .iconos .carrito p::after {
+.iconos .registrarse .texto::after, .iconos .login .texto::after, .iconos .carrito .texto::after {
     content: '';
     position: absolute;
     left: 50%;
@@ -153,7 +154,7 @@
 }
 
   /* Animación al pasar el ratón */
-  .iconos .registrarse p:hover::after,  .iconos .login p:hover::after, .iconos .carrito p:hover::after {
+  .iconos .registrarse .texto:hover::after,  .iconos .login .texto:hover::after, .iconos .carrito .texto:hover::after {
     width: 100%;
   }
 
@@ -166,14 +167,20 @@
   cursor: pointer;
 }
 
+/*Le quito el subrayado al texto afectado por la etiqueta "Link"*/
+
+.sin-subrayado{
+  text-decoration: none;
+}
+
 /*Barra de búsqueda*/
 
 .buscar {
     position: relative;
     padding: 5px;
   }
-  
-  .buscar input {
+
+  .buscar .buscador {
     width: 0;
     height: 40px;
     padding: 0 20px;
@@ -200,11 +207,11 @@
     cursor: pointer;
   }
   
-  .buscar:hover input {
+  .buscar:hover .buscador {
     width: 240px;
   }
   
-  .buscar input:focus {
+  .buscar .buscador:focus {
     width: 240px;
   }
 

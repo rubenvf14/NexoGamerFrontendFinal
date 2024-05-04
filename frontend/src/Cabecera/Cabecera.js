@@ -76,11 +76,11 @@ const Cabecera = ({ fondoUrl }) => {
                 <div>
                     <Link to="/"><img src={logo} alt="logo"></img></Link>
                     <div className={`container ${scrolledUp ? 'hide' : ''}`}>
-                        <h1>NEXOGAMER</h1>
+                        <Link to={"/"} className="sin-subrayado"><h1>NEXOGAMER</h1></Link>
                     </div>
                     <div className={`container ${scrolledUp ? '' : 'hide'}`}>
                         <div className={`buscar ${scrolledUp ? 'movido' : ''}`}>
-                            <input type="text" placeholder="GTA V, Stardew Valley..." value={busqueda} onChange={(e) => setBusqueda(e.target.value)} onKeyDown={handleKeyDown} required />
+                            <input type="text" className="buscador" placeholder="GTA V, Stardew Valley..." value={busqueda} onChange={(e) => setBusqueda(e.target.value)} onKeyDown={handleKeyDown} required />
                             <div className={`btn ${scrolledUp ? 'move' : ''}`} onClick={handleSearchButtonClick}>
                                 <FontAwesomeIcon className="lupa" icon={icon({ name: 'magnifying-glass', family: 'classic', style: 'solid' })} />
                             </div>
@@ -104,18 +104,18 @@ const Cabecera = ({ fondoUrl }) => {
                     </div>
                 </div>
                 <div className="iconos">
-                    <div className="registrarse">
+                <Link to={"/register"} className="sin-subrayado"><div className="registrarse">
                         <FontAwesomeIcon className="right-to-bracket" icon={icon({ name: 'right-to-bracket', family: 'classic', style: 'solid' })} />
-                        <p>Regístrate</p>
-                    </div>
-                    <div className="login">
+                        <p className="texto">Regístrate</p>
+                    </div></Link>
+                <Link to={"/login"} className="sin-subrayado"><div className="login">
                         <FontAwesomeIcon className="user" icon={icon({ name: 'user', family: 'classic', style: 'solid' })} />
-                        <p>Iniciar sesión</p>
-                    </div>
-                    <div className="carrito">
+                        <p className="texto">Iniciar sesión</p>
+                    </div></Link>
+                <Link to={"/carrito"} className="sin-subrayado"><div className="carrito">
                         <FontAwesomeIcon className="cart-shopping" icon={icon({ name: 'cart-shopping', family: 'classic', style: 'solid' })} />
-                        <p>Tus compras</p>
-                    </div>
+                        <p className="texto">Tus compras</p>
+                    </div></Link>
                 </div>
             </div>
             <CabeceraJuegos fondoUrl={fondoUrl}></CabeceraJuegos>
