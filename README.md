@@ -65,7 +65,7 @@ Stars del proyecto:
 
 
 
-Esta aplicación web llamada "NexoGamer" consiste en una red venta de videojuegos online (en línea) tanto a nivel nacional como internacional. Nuestro principal objetivo es atraer al público gamer, es decir, todas las personas que juegan a videojuegos con frecuencia y disfrutan haciéndolo. En nuestra página le ofreceremos descuentos exclusivos y una gran variedad de géneros, títulos, etc para poder seguir haciendo lo que más les gusta, jugar a videojuegos. ¡Esperamos veros pronto!
+Esta aplicación web llamada "NexoGamer" consiste en una red venta de videojuegos online tanto a nivel nacional como internacional. Nuestro principal objetivo es atraer al público gamer, es decir, todas las personas que juegan a videojuegos con frecuencia y disfrutan haciéndolo. En nuestra página le ofreceremos descuentos exclusivos y una gran variedad de géneros, títulos, etc para poder seguir haciendo lo que más les gusta, jugar a videojuegos. ¡Esperamos veros pronto!
 
 
 ## 🛠️ Funcionalidades del proyecto 🛠️
@@ -98,6 +98,8 @@ https://github.com/rubenvf14/NexoGamerFrontendFinal/assets/145007165/376845e6-53
 
 <p>Una vez entres a cada link aparecerá una opción llamada "<> Code" en verde, entonces deberás clicar en ella y copiar al portapapeles el contenido</p>
 
+## <h1> 💻 Backend</h1>
+
 <p>En primer lugar, tendras que instalar una máquina virtual, en mi caso Oracle VM VirtualBox, que posea al menos 4 GB de RAM y 20 GB de espacio de almacenamiento en el sistema operativo Debian (64-bit). Además,
 deberás cambiarle el renvío de puertos en la configuración de la máquina virtual. El directorio es el siguiente: Configuración/Red/Adaptador 1/Reenvío de puertos. Ahí le asignarás tanto al puerto anfitrión como invitado el puerto 8000.</p>
 
@@ -116,7 +118,11 @@ deberás cambiarle el renvío de puertos en la configuración de la máquina vir
 
 
 
-https://github.com/rubenvf14/NexoGamerFrontendFinal/assets/145007165/b519eae7-a519-4ce4-b5de-73768abadb86
+
+https://github.com/rubenvf14/NexoGamerFrontendFinal/assets/145007165/fb4cdf64-6265-4cf6-83b4-5955dca214ab
+
+
+
 
 
 
@@ -133,14 +139,16 @@ https://github.com/rubenvf14/NexoGamerFrontendFinal/assets/145007165/668f81be-f0
 
 </div>
 
-## <h1> 💻 Backend</h1>
-
 <p>Una vez hayas seguidos esos pasos debería aparecer una carpeta llamada RestAPI, a mi no me aparece porque no está terminado aún el repositorio, pero cuando lo esté debes seguir los pasos finales de este vídeo</p>
 
 <div>
   
 
-https://github.com/rubenvf14/NexoGamerFrontendFinal/assets/145007165/6e9dcdaf-16e9-474a-96e4-150e1f54dcd6
+
+
+https://github.com/rubenvf14/NexoGamerFrontendFinal/assets/145007165/0f5d17ef-2940-42ea-922c-304aed910d46
+
+
 
 
 </div>
@@ -152,7 +160,11 @@ https://github.com/rubenvf14/NexoGamerFrontendFinal/assets/145007165/6e9dcdaf-16
 <div>
   
 
-https://github.com/rubenvf14/NexoGamerFrontendFinal/assets/145007165/a8bca6fa-0644-4242-9740-6afcacc866f2
+
+
+https://github.com/rubenvf14/NexoGamerFrontendFinal/assets/145007165/89b89c4b-9158-43c5-be76-0d2459a29797
+
+
 
 
 </div>
@@ -181,6 +193,10 @@ https://github.com/rubenvf14/NexoGamerFrontendFinal/assets/145007165/8f13af8f-ec
 
 ## <h1> 📖 Autores</h1>
 <p>Rubén Varela Figueroa, creador y desarrollador de NexoGamer -> perfil de GitHub: https://github.com/rubenvf14</p>
+
+## <h1> 🤔 Conclusión</h1>
+<p>En resumen, ¿por qué deberías visitar NexoGamer? Porque en nuestra página ofreceremos descuentos increíbles para juegos que nunca te podrías imaginar, y si eres un jugador al que le encantan los videojuegos siempre nos tendrás en cuenta para tus próximos títulos.
+</p>
 
 
 
