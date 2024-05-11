@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./LoginRegister.css";
 import logo from "../nexoGamerFinal.png";
 import { Link } from "react-router-dom";
@@ -9,6 +9,14 @@ import { icon } from '@fortawesome/fontawesome-svg-core/import.macro'
 const Register = () => {
     const videoRef = useRef(null);
     const [muted, setMuted] = useState(false);
+    const [formData, setFormData] = useState({
+        nombre: "",
+        apellidos: "",
+        contraseña: "",
+        telefono: "",
+        email: ""
+    });
+    const [formularioEnviado, setFormularioEnviado] = useState(false);
 
     const toggleMute = () => {
         if (videoRef.current) {
@@ -16,6 +24,47 @@ const Register = () => {
             setMuted(videoRef.current.muted);
         }
     };
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value
+        });
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        // Construir la solicitud POST con los datos del formulario
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData)
+        };
+        fetch('http://localhost:8000/register', requestOptions)
+            .then(response => {
+                if (response.status === 201) {
+                    setFormularioEnviado(true);
+                    setTimeout(() => setFormularioEnviado(false), 5000); // Después de 5 segundos, vuelve a establecer el formularioEnviado en falso
+                    setFormData({
+                        nombre: "",
+                        apellidos: "",
+                        contraseña: "",
+                        telefono: "",
+                        email: ""
+                    }); // Limpiar los campos del formulario
+                }
+                return response.json();
+            })
+            .then(data => console.log(data));
+        // Aquí podrías manejar la respuesta del servidor como desees
+    };
+
+    useEffect(() => {
+        if (formularioEnviado) {
+            setTimeout(() => setFormularioEnviado(false), 5000);
+        }
+    }, [formularioEnviado]);
 
     return (
         <>
@@ -28,30 +77,45 @@ const Register = () => {
                 <Link to={"/"} className="sin-subrayado"><h1>NEXOGAMER</h1></Link>
             </div>
             <div className="videoDerecha">
-            <div className="formularioRegistro">
-                <h1>Regístrate</h1>
-                <form action="post" className="registroForm">
-                    <label for="nombre">Nombre de usuario</label>
-                    <input type="text" id="nombre" alt="nombre" placeholder="Rubén" className="campo"></input>
-                    <label for="apellidos">Apellidos</label>
-                    <input type="text" id="apellidos" alt="apellidos" placeholder="Varela" className="campo"></input>
-                    <label for="password">Contraseña</label>
-                    <input type="password" id="password" alt="password" placeholder="S€gUr4" className="campo"></input>
-                    <label for="telefono">Teléfono</label>
-                    <input type="number" pattern="\d{0,9}" placeholder="634597141" onChange={(e) => {
-                        if (e.target.value.length > 9) {
-                            e.target.value = e.target.value.slice(0, 9);
-                        }
-                    }}
-                    className="campo"/>
-                    <label for="gmail">Correo electrónico</label>
-                    <input type="mail" id="gmail" alt="gmail" placeholder="ruben@gmail.com" className="campo"></input>
-                    <input type="submit" placeholder="Enviar" className="submitRegister"></input>
-                </form>
-                <p>¿Ya tienes una cuenta? <Link to={"/login"}>Inicia sesión</Link></p>
-            </div>
+                <div className="formularioRegistro" style={{ position: "relative" }}>
+                    {!formularioEnviado && (
+                        <>
+                            <h1>Regístrate</h1>
+                            <form onSubmit={handleSubmit} className="registroForm">
+                                <label htmlFor="nombre">Nombre de usuario</label>
+                                <input type="text" id="nombre" name="nombre" value={formData.nombre} onChange={handleInputChange} placeholder="Rubén" className="campo"></input>
+                                <label htmlFor="apellidos">Apellidos</label>
+                                <input type="text" id="apellidos" name="apellidos" value={formData.apellidos} onChange={handleInputChange} placeholder="Varela" className="campo"></input>
+                                <label htmlFor="password">Contraseña</label>
+                                <input type="password" id="password" name="contraseña" value={formData.contraseña} onChange={handleInputChange} placeholder="S€gUr4" className="campo"></input>
+                                <label htmlFor="telefono">Teléfono</label>
+                                <input type="number" id="telefono" name="telefono" value={formData.telefono} onChange={(e) => {
+                                const inputTelefono = e.target.value.slice(0, 9); // Limita la longitud a 9 dígitos
+                                    setFormData({
+                                        ...formData,
+                                        telefono: inputTelefono
+                                    });
+                                    }} 
+                                placeholder="634597141" 
+                                className="campo"
+                                />
+                                <label htmlFor="gmail">Correo electrónico</label>
+                                <input type="email" id="gmail" name="email" value={formData.email} onChange={handleInputChange} placeholder="ruben@gmail.com" className="campo"></input>
+                                <input type="submit" value="Enviar" className="submitRegister"></input>
+                            </form>
+                            <p>¿Ya tienes una cuenta? <Link to={"/login"}>Inicia sesión</Link></p>
+                        </>
+                    )}
+                    {formularioEnviado && (<div>
+                        <div>
+                            <div className="circle"  style={{ display: "flex", flexDirection: "column", alignItems: "center", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}></div>
+                            <div className="check"></div>
+                            <h2 className="sendInformation">¡Cuenta creada con éxito!</h2>
+                        </div>      
+                    </div>)}
+                </div>
                 <video ref={videoRef} src={fondo} autoPlay loop controls={false}></video>
-                    {muted ? <FontAwesomeIcon className="muted" icon={icon({ name: 'volume-xmark', family: 'classic', style: 'solid' })} onClick={toggleMute}/> : <FontAwesomeIcon className="no-muted" icon={icon({ name: 'volume-high', family: 'classic', style: 'solid' })} onClick={toggleMute}/>}
+                {muted ? <FontAwesomeIcon className="muted" icon={icon({ name: 'volume-xmark', family: 'classic', style: 'solid' })} onClick={toggleMute}/> : <FontAwesomeIcon className="no-muted" icon={icon({ name: 'volume-high', family: 'classic', style: 'solid' })} onClick={toggleMute}/>}
             </div>
         </>
     );
