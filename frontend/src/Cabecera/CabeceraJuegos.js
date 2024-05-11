@@ -11,6 +11,9 @@ function CabeceraJuegos() {
   const [opacity, setOpacity] = useState(0); // Estado para la opacidad de la imagen de fondo
   const [imageLoading, setImageLoading] = useState(true); // Estado para controlar la carga de la imagen
   const [reproduciendo, setReproduciendo] = useState(false); // Estado para controlar la reproducción del trailer
+  const [comentarios, setComentarios] = useState([]);
+  const [primerComentarioIndex, setPrimerComentarioIndex] = useState(0); // Índice del primer comentario que se mostrará
+  const [comentarioLoaded, setComentarioLoaded] = useState(false); // Estado para indicar si los comentarios han sido cargados
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,7 +29,6 @@ function CabeceraJuegos() {
         }
         const data = await response.json();
         setJuegos(data);
-        console.log(data);
         if (data.length > 0 && !fondoUrl) {
           setFondoUrl(data[0].urlImagen); // Establece la primera imagen
         }
@@ -61,13 +63,34 @@ function CabeceraJuegos() {
     }
   }, [indiceImagen, juegos]); // Ejecuta cada vez que indiceImagen o juegos cambian
 
-  const handleMouseEnter = () => {
-    setReproduciendo(true);
-  };
+  useEffect(() => {
+    const fetchComentarios = async () => {
+      try {
+        const response = await fetch('http://localhost:8000/comentariosJuegos');
+        if (!response.ok) {
+          throw new Error('Error al obtener los comentarios del backend');
+        }
+        const data = await response.json();
+        setComentarios(data);
+        setComentarioLoaded(true); // Marcar como cargados los comentarios
+      } catch (error) {
+        console.error('Error al obtener los comentarios del backend:', error);
+      }
+    };
+  
+    fetchComentarios();
+  }, []);
 
-  const handleMouseLeave = () => {
-    setReproduciendo(false);
-  };
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setPrimerComentarioIndex(prevIndex => {
+        const nextIndex = (prevIndex + 5) % comentarios.length;
+        return nextIndex;
+      });
+    }, 5000); // Cambiar de conjunto de comentarios cada 5 segundos
+
+    return () => clearInterval(intervalId);
+  }, [comentarios]);
 
   return (
     <>
@@ -98,21 +121,34 @@ function CabeceraJuegos() {
         <div className="carteleraJuegos">
           {juegos.map((juego, key) => (
             <div className='juego' key={key}>
-              <div className='miniCartelera' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+              <div className='miniCartelera' onMouseEnter={() => setReproduciendo(true)} onMouseLeave={() => setReproduciendo(false)}>
                 {reproduciendo && <JuegoConTrailer juego={juego} />} {/* Muestra el trailer si se está reproduciendo */}
                 <div className='contenedorImagen'>
                   <img src={juego.urlImagen} alt='foto' className='miniCarteleras'></img>
                   {juego.rebaja !== 0 && <div className='etiquetaNaranja'>-{juego.rebaja}%</div>}
-              </div>
+                </div>
               </div>
               <div className='texto'>
-                  <p className='nombre'>{juego.nombre}</p>
-                  {juego.precio === "0.00" ? <p className="precio">Gratuito</p> : <p className="precio">{(juego.precio - (juego.precio * (juego.rebaja / 100))).toFixed(2)}€</p>}
+                <p className='nombre'>{juego.nombre.length > 20 ? juego.nombre.substring(0, 20) + '...' : juego.nombre}</p>
+                {juego.precio === "0.00" ? <p className="precio">Gratuito</p> : <p className="precio">{(juego.precio - (juego.precio * (juego.rebaja / 100))).toFixed(2)}€</p>}
               </div>
             </div>
           ))}
         </div>
       </div>
+      <div className='comentarios'>
+        {comentarios.slice(primerComentarioIndex, primerComentarioIndex + 5).map((comentario, index) => (
+          <div key={index} className={`comentario`}>
+              <div className='infoComentarios'>
+                <div className='circulo'>
+                  <FontAwesomeIcon className="user2" icon={icon({ name: 'user', family: 'classic', style: 'solid' })} />
+                </div>
+                <h3 className='tituloJuego'>{comentario.juegoNombre.length > 21 ? comentario.juegoNombre.substring(0, 21) + '...' : comentario.juegoNombre}</h3>
+              </div>
+              <p>{comentario.comentario}</p>
+            </div>
+          ))}
+        </div>
     </>
   );
 }

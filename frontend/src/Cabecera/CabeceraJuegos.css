@@ -167,3 +167,81 @@
   font-weight: 600;
   cursor: pointer;
 }
+
+/*Comentarios de los juegos*/
+
+.comentarios{
+  width: 100%;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 50px;
+}
+
+.comentario{
+  width: 300px;
+  height: 200px;
+  background-color: #323232;
+  color: white;
+  border-radius: 15px;
+  margin-left: 20px;
+  margin-right: 20px;
+  animation: fadeInOut 5s linear infinite;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; }
+  25% { opacity: 1; } /* Cambio más rápido */
+  75% { opacity: 1; } /* Mantenemos la opacidad por un tiempo */
+  100% { opacity: 0; }
+}
+
+.circulo{
+  border-radius: 50%;
+  border: 1px solid white;
+  width: 45px;
+  height: 45px;
+  margin: 10px;
+  color: white;
+}
+
+.user2{
+  width: 30px;
+  height: 30px;
+  margin-left: 7px;
+  margin-top: 5px;
+}
+
+.infoComentarios{
+  display: flex;
+}
+
+.tituloJuego{
+  margin-left: 20px;
+  font-size: 18px;
+  font-weight: bold;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
+  cursor: pointer;
+  position: relative;
+}
+
+/* Estilo de la línea */
+.tituloJuego::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -10px;
+  width: 0;
+  height: 5px;
+  background-color: white;
+  transition: width 0.3s;
+  transform: translateX(-50%);
+}
+
+/* Animación al pasar el ratón */
+.tituloJuego:hover::after {
+  width: 100%;
+}
