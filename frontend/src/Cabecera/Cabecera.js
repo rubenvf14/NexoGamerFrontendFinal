@@ -99,7 +99,7 @@ const Cabecera = ({ fondoUrl }) => {
                             <li>Ordenador</li>
                             <li>Playstation</li>
                             <li>Xbox</li>
-                            <li>Nintendo</li>
+                            <li>Nintendo Switch</li>
                         </ul>
                     </div>
                 </div>
