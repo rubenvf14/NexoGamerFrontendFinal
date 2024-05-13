@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import logo from "../nexoGamerFinal.png";
 import "./Cabecera.css";
 import { Link } from "react-router-dom";
@@ -8,13 +8,23 @@ import { useParams } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import CabeceraJuegos from "./CabeceraJuegos";
 
-const Cabecera = ({ fondoUrl }) => {
+const Cabecera = ({ fondoUrl}) => {
     const { nombre } = useParams();
     const [juego, setJuego] = useState([]);
     const navigate = useNavigate();
     const [busqueda, setBusqueda] = useState('');
     const [isScrolled, setIsScrolled] = useState(false);
     const [scrolledUp, setScrolledUp] = useState(false);
+
+    // Ref para la sección Ordenador en CabeceraJuegos
+    const ordenadorRef = useRef("ordenador");
+    const playstationRef = useRef("playstation");
+    const xboxRef = useRef("xbox");
+    const nintendoRef = useRef("nintendo");
+
+    const handleMenuClick = (ref) => {
+        ref.current.scrollIntoView({ behavior: "smooth" });
+    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -96,10 +106,10 @@ const Cabecera = ({ fondoUrl }) => {
                             </div>
                         </div>
                         <ul className={`menu-list ${scrolledUp ? 'scrolled-up' : ''}`}>
-                            <li>Ordenador</li>
-                            <li>Playstation</li>
-                            <li>Xbox</li>
-                            <li>Nintendo Switch</li>
+                            <li onClick={() => handleMenuClick(ordenadorRef)}>Ordenador</li>
+                            <li onClick={() => handleMenuClick(playstationRef)}>PlayStation</li>
+                            <li onClick={() => handleMenuClick(xboxRef)}>Xbox</li>
+                            <li onClick={() => handleMenuClick(nintendoRef)}>Nintendo Switch</li>
                         </ul>
                     </div>
                 </div>
@@ -118,7 +128,8 @@ const Cabecera = ({ fondoUrl }) => {
                     </div></Link>
                 </div>
             </div>
-            <CabeceraJuegos fondoUrl={fondoUrl}></CabeceraJuegos>
+            {/* Aquí pasamos la función handleMenuClick como prop */}
+            <CabeceraJuegos fondoUrl={fondoUrl} ordenadorRef={ordenadorRef} playstationRef={playstationRef} xboxRef={xboxRef} nintendoRef={nintendoRef} handleMenuClick={handleMenuClick}/>
         </>
     );
 }

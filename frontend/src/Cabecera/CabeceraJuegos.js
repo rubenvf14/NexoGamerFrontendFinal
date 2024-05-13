@@ -10,17 +10,16 @@ function filtrarPorConsola(juegos, consola) {
 }
 
 // Componente CabeceraJuegos
-function CabeceraJuegos() {
+function CabeceraJuegos(props) {
   // Estados
   const [fondoUrl, setFondoUrl] = useState(''); // URL del fondo
   const [indiceImagen, setIndiceImagen] = useState(0); // Índice de la imagen actual
   const [juegos, setJuegos] = useState([]); // Lista de juegos
   const [opacity, setOpacity] = useState(0); // Opacidad
-  const [imageLoading, setImageLoading] = useState(true); // Carga de imagen
   const [reproduciendo, setReproduciendo] = useState(false); // Estado de reproducción
   const [comentarios, setComentarios] = useState([]); // Lista de comentarios
   const [primerComentarioIndex, setPrimerComentarioIndex] = useState(0); // Índice del primer comentario
-  const [comentarioLoaded, setComentarioLoaded] = useState(false); // Comentario cargado
+
 
   // useEffect para cargar los juegos desde el backend al montar el componente
   useEffect(() => {
@@ -63,11 +62,9 @@ function CabeceraJuegos() {
   // useEffect para cargar la siguiente imagen de fondo
   useEffect(() => {
     if (juegos.length > 0) {
-      setImageLoading(true);
       setOpacity(0);
       setTimeout(() => {
         setFondoUrl(juegos[indiceImagen].urlImagen);
-        setImageLoading(false);
         setTimeout(() => {
           setOpacity(1);
         }, 100); // Ajusta este tiempo según sea necesario
@@ -85,7 +82,6 @@ function CabeceraJuegos() {
         }
         const data = await response.json();
         setComentarios(data);
-        setComentarioLoaded(true);
       } catch (error) {
         console.error('Error al obtener los comentarios del backend:', error);
       }
@@ -156,7 +152,7 @@ function CabeceraJuegos() {
           ))}
         </div>
       </div>
-      <div className='comentarios'>
+      <div className='comentarios' ref={props.ordenadorRef}>
         {/* Renderiza los comentarios */}
         {comentarios.slice(primerComentarioIndex, primerComentarioIndex + 5).map((comentario, index) => (
           <div key={index} className={`comentario`}>
@@ -190,6 +186,7 @@ function CabeceraJuegos() {
                 </div>
               </div>
             ))}
+            <div ref={props.playstationRef}></div>
           </div>
         </div>
         <div className='generalBody'>
@@ -211,6 +208,7 @@ function CabeceraJuegos() {
                 </div>
               </div>
             ))}
+            <div ref={props.xboxRef}></div>
           </div>
         </div>
         <div className='generalBody'>
@@ -232,6 +230,7 @@ function CabeceraJuegos() {
                 </div>
               </div>
             ))}
+            <div ref={props.nintendoRef}></div>
           </div>
         </div>
         <div className='generalBody'>
