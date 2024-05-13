@@ -193,13 +193,6 @@
 
 @keyframes fadeInOut {
   0% { opacity: 0; }
-  25% { opacity: 1; } /* Cambio más rápido */
-  75% { opacity: 1; } /* Mantenemos la opacidad por un tiempo */
-  100% { opacity: 0; }
-}
-
-@keyframes fadeInOut {
-  0% { opacity: 0; }
   20% { opacity: 1;}
   40% { opacity: 1; }
   60% { opacity: 1; }
