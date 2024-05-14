@@ -33,12 +33,12 @@
   .cabecera div img{
     transition: transform 1s ease;
     margin: 10px;
+    border-radius: 60%;
   }
   
   .cabecera div img:hover{
     animation: moverIcono 1s ease;
     box-shadow: 0 0 10px white;
-    border-radius: 60%;
   }
   
   @keyframes moverIcono{
@@ -281,6 +281,81 @@ h1.hide {
   transform: translateY(-20%);
   transition: transform 0.3s ease;
 }
+
+/*Pie de página*/
+
+.footer{
+  display: flex;
+  justify-content: space-between;
+  background-color: black;
+  align-items: center;
+  color: white;
+  height: 150px;
+  bottom: 0;
+  left: 0;
+}
+
+.miniLogo{
+  margin-right: 10px;
+  width: 120px;
+  border-radius: 50%;
+  transition: box-shadow 0.5s ease;
+}
+
+.miniLogo:hover{
+  box-shadow: 0 0 10px white;
+}
+
+.leftFooter a{
+  margin-left: 20px;
+  text-decoration: none;
+  font-size: 14pt;
+  position: relative;
+}
+  
+
+  .leftFooter a::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -10px;
+    width: 0;
+    height: 2px;
+    background-color: white;
+    transition: width 0.3s;
+    transform: translateX(-50%);
+  }
+  
+  .leftFooter a:hover::after {
+    width: 100%;
+  }
+
+.rightFooter{
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+}
+
+.rightFooter h2{
+  text-decoration: none;
+  position: relative;
+}
+  
+  .rightFooter h2::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -10px;
+    width: 0;
+    height: 4px;
+    background-color: white;
+    transition: width 0.3s;
+    transform: translateX(-50%);
+  }
+  
+  .rightFooter h2:hover::after {
+    width: 100%;
+  }
 
 
 

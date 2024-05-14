@@ -130,6 +130,16 @@ const Cabecera = ({ fondoUrl}) => {
             </div>
             {/* Aquí pasamos la función handleMenuClick como prop */}
             <CabeceraJuegos fondoUrl={fondoUrl} ordenadorRef={ordenadorRef} playstationRef={playstationRef} xboxRef={xboxRef} nintendoRef={nintendoRef} handleMenuClick={handleMenuClick}/>
+            <div className="footer">
+                <div className="leftFooter">
+                    <Link to="/">Aviso legal</Link>
+                    <Link to="/">Cookies</Link>
+                </div>
+                <div className="rightFooter">
+                    <Link to="/"><img src={logo} alt="logo" className="miniLogo"></img></Link>
+                    <Link to="/" className="sin-subrayado"><h2>NEXOGAMER</h2></Link>
+                </div>
+            </div>
         </>
     );
 }
