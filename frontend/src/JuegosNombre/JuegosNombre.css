@@ -1,3 +1,7 @@
+html{
+  height: 100vh;
+}
+
 body{
     background-color: #272727;
 }
@@ -20,6 +24,7 @@ body{
     height: 150px;
     bottom: 0;
     left: 0;
+    width: 100%;
   }
   
   .miniLogo{
@@ -83,3 +88,101 @@ body{
     .rightFooter h2:hover::after {
       width: 100%;
     }
+
+    .carteleraJuegos{
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .desplegables{
+      margin-top: 240px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .generalBody{
+      margin-top: 60px;
+    }
+
+    .miniCartelera{
+      width: 380px;
+      height: 220px;
+    }
+
+    .nombre, .precio{
+      color: white;
+      font-family: Kanit;
+    }
+
+    select:not(:first-child){
+      margin-left: 20px;
+    }
+
+/* Estilo para el selector */
+.desplegables select {
+  background-color: #1D1D1D;
+  color: white;
+  font-size: 12pt;
+  width: 250px;
+  height: 50px;
+  border-radius: 5px;
+  padding-left: 5px;
+  box-sizing: border-box;
+  font-family: Kanit;
+}
+
+.desplegables select .opciones:hover{
+  background-color: #FF5400;
+}
+
+.custom-select {
+  position: relative;
+  display: inline-block;
+}
+
+.opcion {
+  padding: 5px;
+  cursor: pointer;
+}
+
+.opcion:hover, .opcion.hover {
+  background-color: #FF5400;
+}
+
+.inputContainer{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.inputNames h3{
+  display: inline-block;
+  text-align: center;
+  color: white;
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.inputNames h3::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -10px;
+  width: 0;
+  height: 3px;
+  background-color: white;
+  transition: width 0.3s;
+  transform: translateX(-50%);
+}
+  
+.inputNames h3:hover::after {
+  width: 100%;
+}
+
+
+  

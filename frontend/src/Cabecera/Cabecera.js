@@ -2,14 +2,13 @@ import React, { useState, useEffect, useRef } from "react";
 import logo from "../nexoGamerFinal.png";
 import "./Cabecera.css";
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { icon } from '@fortawesome/fontawesome-svg-core/import.macro'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import CabeceraJuegos from "./CabeceraJuegos";
 
-const Cabecera = ({ fondoUrl}) => {
-    const { nombre } = useParams();
+const Cabecera = ({ fondoUrl }) => {
     const [juego, setJuego] = useState([]);
     const navigate = useNavigate();
     const [busqueda, setBusqueda] = useState('');
@@ -26,10 +25,12 @@ const Cabecera = ({ fondoUrl}) => {
         ref.current.scrollIntoView({ behavior: "smooth" });
     };
 
+    const parametro = useParams()
+
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`http://localhost:8000/juegosNombre?nombre=${nombre}`, {
+                const response = await fetch(`http://localhost:8000/juegosNombre?nombre=${parametro.juego}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -46,7 +47,7 @@ const Cabecera = ({ fondoUrl}) => {
         };
 
         fetchData();
-    }, [nombre]);
+    }, []);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -63,7 +64,9 @@ const Cabecera = ({ fondoUrl}) => {
     }, []);
 
     const handleBusqueda = () => {
-        navigate(`/juegosNombre/${busqueda}`);
+        if (busqueda.trim() !== '') {
+            navigate(`/juegosNombre/${busqueda}`);
+        }
     };
 
     const handleKeyDown = (event) => {
@@ -84,13 +87,21 @@ const Cabecera = ({ fondoUrl}) => {
             <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet"></link>
             <div className={`cabecera ${isScrolled ? 'scroll' : ''}`}>
                 <div>
-                    <Link to="/"><img src={logo} alt="logo"></img></Link>
+                    <Link to="/"><img src={logo} alt="logo" /></Link>
                     <div className={`container ${scrolledUp ? 'hide' : ''}`}>
                         <Link to={"/"} className="sin-subrayado"><h1>NEXOGAMER</h1></Link>
                     </div>
                     <div className={`container ${scrolledUp ? '' : 'hide'}`}>
                         <div className={`buscar ${scrolledUp ? 'movido' : ''}`}>
-                            <input type="text" className="buscador" placeholder="GTA V, Stardew Valley..." value={busqueda} onChange={(e) => setBusqueda(e.target.value)} onKeyDown={handleKeyDown} required />
+                            <input
+                                type="text"
+                                className="buscador"
+                                placeholder="GTA V, Stardew Valley..."
+                                value={busqueda}
+                                onChange={(e) => setBusqueda(e.target.value)}
+                                onKeyDown={handleKeyDown}
+                                required
+                            />
                             <div className={`btn ${scrolledUp ? 'move' : ''}`} onClick={handleSearchButtonClick}>
                                 <FontAwesomeIcon className="lupa" icon={icon({ name: 'magnifying-glass', family: 'classic', style: 'solid' })} />
                             </div>
@@ -100,7 +111,14 @@ const Cabecera = ({ fondoUrl}) => {
                 <div className="menu">
                     <div className={`container ${scrolledUp ? 'show' : ''}`}>
                         <div className={`buscar ${scrolledUp ? 'hide' : ''}`}>
-                            <input type="text" placeholder="GTA V, Stardew Valley..." value={busqueda} onChange={(e) => setBusqueda(e.target.value)} onKeyDown={handleKeyDown} required />
+                            <input
+                                type="text"
+                                placeholder="GTA V, Stardew Valley..."
+                                value={busqueda}
+                                onChange={(e) => setBusqueda(e.target.value)}
+                                onKeyDown={handleKeyDown}
+                                required
+                            />
                             <div className={`btn ${scrolledUp ? 'move' : ''}`} onClick={handleSearchButtonClick}>
                                 <FontAwesomeIcon className="lupa" icon={icon({ name: 'magnifying-glass', family: 'classic', style: 'solid' })} />
                             </div>
@@ -114,29 +132,41 @@ const Cabecera = ({ fondoUrl}) => {
                     </div>
                 </div>
                 <div className="iconos">
-                <Link to={"/register"} className="sin-subrayado"><div className="registrarse">
-                        <FontAwesomeIcon className="right-to-bracket" icon={icon({ name: 'right-to-bracket', family: 'classic', style: 'solid' })} />
-                        <p className="texto">Regístrate</p>
-                    </div></Link>
-                <Link to={"/login"} className="sin-subrayado"><div className="login">
-                        <FontAwesomeIcon className="user" icon={icon({ name: 'user', family: 'classic', style: 'solid' })} />
-                        <p className="texto">Iniciar sesión</p>
-                    </div></Link>
-                <Link to={"/carrito"} className="sin-subrayado"><div className="carrito">
-                        <FontAwesomeIcon className="cart-shopping" icon={icon({ name: 'cart-shopping', family: 'classic', style: 'solid' })} />
-                        <p className="texto">Tus compras</p>
-                    </div></Link>
+                    <Link to={"/register"} className="sin-subrayado">
+                        <div className="registrarse">
+                            <FontAwesomeIcon className="right-to-bracket" icon={icon({ name: 'right-to-bracket', family: 'classic', style: 'solid' })} />
+                            <p className="texto">Regístrate</p>
+                        </div>
+                    </Link>
+                    <Link to={"/login"} className="sin-subrayado">
+                        <div className="login">
+                            <FontAwesomeIcon className="user" icon={icon({ name: 'user', family: 'classic', style: 'solid' })} />
+                            <p className="texto">Iniciar sesión</p>
+                        </div>
+                    </Link>
+                    <Link to={"/carrito"} className="sin-subrayado">
+                        <div className="carrito">
+                            <FontAwesomeIcon className="cart-shopping" icon={icon({ name: 'cart-shopping', family: 'classic', style: 'solid' })} />
+                            <p className="texto">Tus compras</p>
+                        </div>
+                    </Link>
                 </div>
             </div>
-            {/* Aquí pasamos la función handleMenuClick como prop */}
-            <CabeceraJuegos fondoUrl={fondoUrl} ordenadorRef={ordenadorRef} playstationRef={playstationRef} xboxRef={xboxRef} nintendoRef={nintendoRef} handleMenuClick={handleMenuClick}/>
+            <CabeceraJuegos
+                fondoUrl={fondoUrl}
+                ordenadorRef={ordenadorRef}
+                playstationRef={playstationRef}
+                xboxRef={xboxRef}
+                nintendoRef={nintendoRef}
+                handleMenuClick={handleMenuClick}
+            />
             <div className="footer">
                 <div className="leftFooter">
                     <Link to="/">Aviso legal</Link>
                     <Link to="/">Cookies</Link>
                 </div>
                 <div className="rightFooter">
-                    <Link to="/"><img src={logo} alt="logo" className="miniLogo"></img></Link>
+                    <Link to="/"><img src={logo} alt="logo" className="miniLogo" /></Link>
                     <Link to="/" className="sin-subrayado"><h2>NEXOGAMER</h2></Link>
                 </div>
             </div>
