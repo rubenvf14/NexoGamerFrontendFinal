@@ -116,7 +116,7 @@ const JuegosNombre = () => {
             setJuegosFiltrados(juegosFiltradosTemp);
     
             // Activar la animación si los juegos filtrados son diferentes o si se están eliminando los filtros
-            if (juegosDiferentes || (generoSeleccionado === 'Cualquiera' && consolaSeleccionada === 'Todas' && plataformaSeleccionada === 'Todas' && añoSeleccionado === 'Cualquiera' && precioMin === 0 && precioMax === 100)) {
+            if (juegosDiferentes) {
                 setShowAnimation(true);
                 const timer = setTimeout(() => {
                     setShowAnimation(false);
