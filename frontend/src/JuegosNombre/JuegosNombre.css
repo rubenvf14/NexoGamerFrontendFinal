@@ -11,6 +11,12 @@ body{
     justify-content: space-between;
     align-items: center;
     font-family: Kanit;
+    min-height: 45.5vh;
+}
+
+.carteleraJuegos > p{
+  font-size: 15pt;
+  margin-bottom: 150px;
 }
 
 /*Pie de página*/
@@ -98,7 +104,7 @@ body{
     }
 
     .desplegables{
-      margin-top: 240px;
+      margin-top: 220px;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -182,6 +188,92 @@ body{
   
 .inputNames h3:hover::after {
   width: 100%;
+}
+
+/*Icono de la basura*/
+
+.trash{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-left: 20px;
+  padding-top: 50px;
+}
+
+.trash img{
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.trash img:hover{
+  transform: scale(1.2);
+}
+
+.trash p{
+  margin-top: 10px;
+  color: #f93729;
+  font-size: 12pt;
+  cursor: pointer;
+}
+
+/*Filtro de precio de los juegos*/
+
+.precio{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12pt;
+  font-weight: none;
+  height: 30px;
+}
+
+.precio p{
+  margin-bottom: 60px;
+}
+
+.precio input{
+  width: 50px;
+  text-align: center;
+  margin-left: 10px;
+  margin-right: 10px;
+  background-color: #1D1D1D;
+  color: white;
+  font-size: 12pt;
+  border-radius: 5px;
+  padding-left: 5px;
+  box-sizing: border-box;
+  font-family: Kanit;
+}
+
+/*Eliminar las flechas de los input (sumar y restar números)*/
+
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  appearance: none;
+}
+
+/*Animación al aplicar un filtro*/
+
+@keyframes fade-in {
+  0%{
+    opacity: 0;
+  }
+  80%{
+    opacity: 1;
+  }
+  100%{
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  animation: fade-in 0.8s ease;
 }
 
 

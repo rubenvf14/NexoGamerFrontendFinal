@@ -4,26 +4,28 @@ import logo from "../nexoGamerFinal.png";
 import CabeceraGlobal from '../CabeceraGlobal/CabeceraGlobal';
 import JuegoConTrailer from '../JuegoConTrailer/JuegoConTrailer';
 import "./JuegosNombre.css";
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import basura from "./basura.png";
 
 const JuegosNombre = () => {
     const [juegos, setJuego] = useState([]);
-    const  parametro  = useParams();
+    const parametro = useParams();
     const [plataformas, setPlataformas] = useState([]);
     const [reproduciendo, setReproduciendo] = useState(false);
     const navigate = useNavigate();
     const [busqueda, setBusqueda] = useState('');
     const [generos, setGeneros] = useState([]);
     const [consolas, setConsolas] = useState([]);
-    const [generoSeleccionado, setGeneroSeleccionado] = useState('');
+    const [generoSeleccionado, setGeneroSeleccionado] = useState('Cualquiera');
     const [juegosFiltrados, setJuegosFiltrados] = useState([]);
-    const [consolaSeleccionada, setConsolaSeleccionada] = useState('');
-    const [plataformaSeleccionada, setPlataformaSeleccionada] = useState('');
+    const [consolaSeleccionada, setConsolaSeleccionada] = useState('Todas');
+    const [plataformaSeleccionada, setPlataformaSeleccionada] = useState('Todas');
     const [años, setAños] = useState([]);
-    const [añoSeleccionado, setAñoSeleccionado] = useState('');
-
-    // Dentro del useEffect que maneja el filtro por género
+    const [añoSeleccionado, setAñoSeleccionado] = useState('Cualquiera');
+    const [precioMin, setPrecioMin] = useState(0);
+    const [precioMax, setPrecioMax] = useState(100);
+    const [showAnimation, setShowAnimation] = useState(false);
+    const [aplicandoFiltros, setAplicandoFiltros] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -41,7 +43,6 @@ const JuegosNombre = () => {
 
                 const dataJuegos = await responseJuegos.json();
 
-                // Extraer y separar géneros, consolas y años de los juegos y eliminar duplicados
                 const generosSet = new Set();
                 const consolasSet = new Set();
                 const plataformasSet = new Set();
@@ -58,11 +59,10 @@ const JuegosNombre = () => {
                         plataformasSet.add(platform.trim());
                     });
                     
-                    const añoJuego = parseInt(juego.fechaSalida); // Convertimos la fecha a entero
+                    const añoJuego = parseInt(juego.fechaSalida);
                     añosSet.add(añoJuego);
                 });
 
-                // Convertir los Sets a Arrays y añadir opciones por defecto
                 const generosArray = ['Cualquiera', ...Array.from(generosSet)];
                 const consolasArray = ['Todas', ...Array.from(consolasSet)];
                 const plataformasArray = ['Todas', ...Array.from(plataformasSet)];
@@ -84,31 +84,60 @@ const JuegosNombre = () => {
     }, [parametro.juego]);
 
     useEffect(() => {
-        // Filtrar juegos basados en el género seleccionado, la consola seleccionada, la plataforma seleccionada y el año seleccionado
         const filterJuegos = () => {
             let juegosFiltradosTemp = juegos;
-
+    
+            // Filtrar los juegos según los criterios seleccionados
             if (generoSeleccionado !== 'Cualquiera') {
                 juegosFiltradosTemp = juegosFiltradosTemp.filter(juego => juego.genero.includes(generoSeleccionado));
             }
-
+    
             if (consolaSeleccionada !== 'Todas') {
                 juegosFiltradosTemp = juegosFiltradosTemp.filter(juego => juego.consola.includes(consolaSeleccionada));
             }
-
+    
             if (plataformaSeleccionada !== 'Todas' && plataformaSeleccionada !== '') {
                 juegosFiltradosTemp = juegosFiltradosTemp.filter(juego => juego.plataforma.includes(plataformaSeleccionada));
             }
-
+    
             if (añoSeleccionado !== 'Cualquiera' && añoSeleccionado !== '') {
                 juegosFiltradosTemp = juegosFiltradosTemp.filter(juego => parseInt(juego.fechaSalida) === parseInt(añoSeleccionado));
             }
-
+    
+            juegosFiltradosTemp = juegosFiltradosTemp.filter(juego => {
+                const precioActual = juego.precio - (juego.precio * (juego.rebaja / 100));
+                return precioActual >= precioMin && precioActual <= precioMax;
+            });
+    
+            // Verificar si los juegos filtrados son diferentes a los juegos anteriores
+            const juegosDiferentes = JSON.stringify(juegosFiltradosTemp) !== JSON.stringify(juegosFiltrados);
+    
+            // Actualizar los juegos filtrados
             setJuegosFiltrados(juegosFiltradosTemp);
+    
+            // Activar la animación si los juegos filtrados son diferentes o si se están eliminando los filtros
+            if (juegosDiferentes || (generoSeleccionado === 'Cualquiera' && consolaSeleccionada === 'Todas' && plataformaSeleccionada === 'Todas' && añoSeleccionado === 'Cualquiera' && precioMin === 0 && precioMax === 100)) {
+                setShowAnimation(true);
+                const timer = setTimeout(() => {
+                    setShowAnimation(false);
+                }, 500);
+                return () => clearTimeout(timer);
+            }
         };
-
+    
         filterJuegos();
-    }, [generoSeleccionado, consolaSeleccionada, plataformaSeleccionada, añoSeleccionado, juegos]);
+    }, [generoSeleccionado, consolaSeleccionada, plataformaSeleccionada, añoSeleccionado, precioMin, precioMax, juegos]);
+    
+    
+    useEffect(() => {
+        if (juegosFiltrados.length > 0) {
+            setShowAnimation(true);
+            const timer = setTimeout(() => {
+                setShowAnimation(false);
+            }, 500);
+            return () => clearTimeout(timer);
+        }
+    }, [juegosFiltrados]);
 
 
     const handlePlataformaChange = (event) => {
@@ -132,13 +161,30 @@ const JuegosNombre = () => {
     };
 
     const handleReset = () => {
-        setGeneroSeleccionado('');
-        setConsolaSeleccionada('');
-        setPlataformaSeleccionada('');
-        setAñoSeleccionado('');
+        setGeneroSeleccionado('Cualquiera');
+        setConsolaSeleccionada('Todas');
+        setPlataformaSeleccionada('Todas');
+        setAñoSeleccionado('Cualquiera');
+        setJuegosFiltrados(juegos);
+        resetearPrecios();
     };
 
-    return (<>
+    // Manejador de eventos para actualizar el precio mínimo
+    const handlePrecioMinChange = (event) => {
+        setPrecioMin(event.target.value);
+    };
+    
+    // Manejador de eventos para actualizar el precio máximo
+    const handlePrecioMaxChange = (event) => {
+        setPrecioMax(event.target.value);
+    };
+
+    const resetearPrecios = () => {
+        setPrecioMin(0);
+        setPrecioMax(100);
+    };
+
+    return (
         <div className='generalContainer'>
             <CabeceraGlobal />
             <div className='desplegables'>
@@ -147,9 +193,9 @@ const JuegosNombre = () => {
                         <h3>Sistemas</h3>
                     </div>
                     <select value={consolaSeleccionada} onChange={(e) => setConsolaSeleccionada(e.target.value)}>
-                            {consolas.map((consola, index) => (
-                                <option className="opciones" key={index} value={consola}>{consola}</option>
-                            ))}
+                        {consolas.map((consola, index) => (
+                            <option className="opciones" key={index} value={consola}>{consola}</option>
+                        ))}
                     </select>
                 </div>
                 <div className='inputContainer'>
@@ -167,9 +213,9 @@ const JuegosNombre = () => {
                         <h3>Géneros</h3>
                     </div>
                     <select value={generoSeleccionado} onChange={(e) => setGeneroSeleccionado(e.target.value)}>
-                            {generos.map((genero, index) => (
-                                <option className="opciones" key={index} value={genero}>{genero}</option>
-                            ))}
+                        {generos.map((genero, index) => (
+                            <option className="opciones" key={index} value={genero}>{genero}</option>
+                        ))}
                     </select>
                 </div>
                 <div className='inputContainer'>
@@ -177,19 +223,30 @@ const JuegosNombre = () => {
                         <h3>Año</h3>
                     </div>
                     <select value={añoSeleccionado} onChange={(e) => setAñoSeleccionado(e.target.value)}>
-                            {años.map((año, index) => (
-                                <option className='opciones' key={index} value={año}>{año}</option>
-                            ))}
+                        {años.map((año, index) => (
+                            <option className='opciones' key={index} value={año}>{año}</option>
+                        ))}
                     </select>
                 </div>
+                <div className='trash' onClick={handleReset}>
+                    <img src={basura} alt='basura'></img>
+                    <p>Eliminar filtros</p>
                 </div>
-                <div className='generalBody'>
-                <div className='carteleraJuegos' style={{minHeight: "45.5vh"}}>
+            </div>
+            <div className='precio'>
+                <p>Entre</p>
+                <input type='number' id='number1' placeholder='0' value={precioMin} onChange={handlePrecioMinChange}></input>
+                <p>y</p>
+                <input type='number' id='number2' placeholder='100' value={precioMax} onChange={handlePrecioMaxChange}></input>
+                <p>€</p>
+            </div>
+            <div className='generalBody'>
+                <div className='carteleraJuegos'>
                     {juegosFiltrados.length === 0 ? (
-                        <p style={{fontSize: "15pt", marginBottom: "150px"}}>No hay juegos con los filtros seleccionados</p>
+                        <p>No hay juegos con los filtros seleccionados</p>
                     ) : (
                         juegosFiltrados.map((juego, key) => (
-                            <div className='juego' key={key}>
+                            <div className={`juego ${showAnimation ? 'fade-in' : ''}`} key={key}>
                                 <div className='miniCartelera' onMouseEnter={() => setReproduciendo(true)} onMouseLeave={() => setReproduciendo(false)}>
                                     {reproduciendo && <JuegoConTrailer juego={juego} />}
                                     <div className='contenedorImagen'>
@@ -206,18 +263,18 @@ const JuegosNombre = () => {
                     )}
                 </div>
             </div>
-        </div>
-        <div className="footer">
-            <div className="leftFooter">
-                <Link to="/">Aviso legal</Link>
-                <Link to="/">Cookies</Link>
-                    </div>
-                    <div className="rightFooter">
-                        <Link to="/"><img src={logo} alt="logo" className="miniLogo"></img></Link>
-                        <Link to="/" className="sin-subrayado"><h2>NEXOGAMER</h2></Link>
-                    </div>
+            <div className="footer">
+                <div className="leftFooter">
+                    <Link to="/">Aviso legal</Link>
+                    <Link to="/">Cookies</Link>
+                </div>
+                <div className="rightFooter">
+                    <Link to="/"><img src={logo} alt="logo" className="miniLogo"></img></Link>
+                    <Link to="/" className="sin-subrayado"><h2>NEXOGAMER</h2></Link>
+                </div>
             </div>
-    </>);
-};
+        </div>
+    );
+}       
 
 export default JuegosNombre;
