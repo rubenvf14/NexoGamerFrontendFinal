@@ -250,6 +250,70 @@ p{
     stroke: #FFFFFF; /* Color blanco */
   }
   
+  /*Mensaje de error*/
+
+  .error {
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 13pt;
+    font-family: Kanit;
+    animation-name: drawError; /* Agregar esta línea */
+    animation-duration: 0.5s;
+    animation-fill-mode: both;
+}
+
+.error.fadeOut {
+    animation-name: fadeOut;
+  }
+  
+  .error.fadeIn {
+    animation-name: fadeIn;
+  }
+  
+  @keyframes fadeOut {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+  
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+/*Animación para las barras de la cruz del error*/
+  
+@keyframes drawSlash1 {
+    0% {
+      stroke-dasharray: 0, 20; /* Inicia sin longitud */
+      stroke-dashoffset: 0;
+    }
+    100% {
+      stroke-dasharray: 20, 0; /* Termina con la longitud completa */
+      stroke-dashoffset: 0;
+    }
+  }
+  
+  @keyframes drawSlash2 {
+    0% {
+      stroke-dasharray: 0, 20; /* Inicia sin longitud */
+      stroke-dashoffset: 0;
+    }
+    100% {
+      stroke-dasharray: 20, 0; /* Termina con la longitud completa */
+      stroke-dashoffset: 0;
+    }
+  }
   
   
   

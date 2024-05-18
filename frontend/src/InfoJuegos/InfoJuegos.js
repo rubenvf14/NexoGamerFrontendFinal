@@ -13,6 +13,7 @@ const InfoJuegos = () => {
   const [juego, setJuego] = useState(null);
   const [comentario, setComentario] = useState('');
   const [mostrarExito, setMostrarExito] = useState(false);
+  const [errorAlEnviar, setErrorAlEnviar] = useState(false);
 
   useEffect(() => {
     const fetchJuego = async () => {
@@ -33,7 +34,7 @@ const InfoJuegos = () => {
         console.error('Error al obtener los detalles del juego:', error);
       }
     };
-
+  
     fetchJuego();
   }, [parametro.id]);
 
@@ -47,22 +48,28 @@ const InfoJuegos = () => {
         body: JSON.stringify({
           comentario: comentario,
           juegoId: parametro.id,
-          userId: 1 
+          userId: 100
         })
       });
       if (!response.ok) {
         throw new Error('Error al enviar el comentario');
       }
       const data = await response.json();
-      console.log(data); 
-      setMostrarExito(true); // Mostrar mensaje de éxito
+      console.log(data);
+      setMostrarExito(true); 
       setTimeout(() => {
         setMostrarExito(false); // Ocultar mensaje de éxito después de 5 segundos
       }, 5000);
     } catch (error) {
       console.error('Error al enviar el comentario:', error);
+      setMostrarExito(false);
+      setErrorAlEnviar(true); // Establecer errorEnRespuesta en true si hay un error al obtener los juegos
+      setTimeout(() => {
+        setErrorAlEnviar(false); // Ocultar mensaje de error después de 5 segundos
+      }, 5000);
     }
   };
+  
 
   const handleEnviarComentario = async () => {
     if (comentario.trim() !== '') {
@@ -70,6 +77,7 @@ const InfoJuegos = () => {
       setComentario('');
     }
   };
+
 
   return (
     <>
@@ -122,7 +130,7 @@ const InfoJuegos = () => {
                 <h2>Valoración</h2>
                 <StarRating rating={juego.valoracion} size={24}></StarRating>
               </div>
-              {!mostrarExito && (
+              {!mostrarExito && !errorAlEnviar && (
                 <div className={`añadirComentario ${mostrarExito ? 'fadeOut' : 'fadeIn'}`}>
                   <h2>¡Añade aquí tu comentario!</h2>
                   <div className='comentarioFinal'>
@@ -152,6 +160,16 @@ const InfoJuegos = () => {
                   <h2>¡Comentario enviado con éxito!</h2>
                 </div>
               )}
+          {errorAlEnviar && (
+            <div className={`error ${errorAlEnviar ? 'fadeIn' : 'fadeOut'}`}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#FF0000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="11" fill="none" stroke="#FF0000" strokeWidth="2" />
+                <line x1="15" y1="9" x2="9" y2="15" stroke="red" strokeWidth="2" style={{ animation: `drawSlash1 1.5s ease-in-out forwards` }} />
+                <line x1="9" y1="9" x2="15" y2="15" stroke="red" strokeWidth="2" style={{ animation: `drawSlash2 1.5s ease-in-out forwards` }} />
+              </svg>
+              <h2>¡Error al enviar el comentario!</h2>
+            </div>
+            )}
             </div>
           </div>
         )}
@@ -171,3 +189,5 @@ const InfoJuegos = () => {
 }
 
 export default InfoJuegos;
+
+                      
