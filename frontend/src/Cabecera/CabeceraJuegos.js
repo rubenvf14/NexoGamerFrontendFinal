@@ -170,7 +170,7 @@ function CabeceraJuegos(props) {
               </div>
               <h3 className='tituloJuego'>{comentario.juegoNombre.length > 21 ? comentario.juegoNombre.substring(0, 21) + '...' : comentario.juegoNombre}</h3>
             </div>
-            <p>{comentario.comentario}</p>
+            <div className='textoComentario'>{comentario.comentario}</div>
           </div>
         ))}
       </div>

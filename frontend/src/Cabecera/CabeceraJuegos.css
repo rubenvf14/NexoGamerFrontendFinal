@@ -192,6 +192,13 @@
   animation: fadeInOut 5s linear infinite;
 }
 
+.textoComentario{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+}
+
 @keyframes fadeInOut {
   0% { opacity: 0; }
   20% { opacity: 1;}
@@ -220,6 +227,7 @@
 
 .infoComentarios{
   display: flex;
+  align-items: center;
 }
 
 .tituloJuego{

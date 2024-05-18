@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import "./InfoJuegos.css"
+import "./InfoJuegos.css";
 import CabeceraGlobal from '../CabeceraGlobal/CabeceraGlobal';
 import { Link } from 'react-router-dom';
 import StarRating from '../StarRating';
@@ -9,10 +9,10 @@ import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
 import logo from "../nexoGamerFinal.png";
 
 const InfoJuegos = () => {
-  const parametro = useParams(); // Obtiene el parámetro 'id' de la URL
+  const parametro = useParams(); 
   const [juego, setJuego] = useState(null);
-
-  // Aquí puedes realizar una solicitud para obtener los detalles del juego utilizando el ID
+  const [comentario, setComentario] = useState('');
+  const [mostrarExito, setMostrarExito] = useState(false);
 
   useEffect(() => {
     const fetchJuego = async () => {
@@ -22,9 +22,7 @@ const InfoJuegos = () => {
           throw new Error('Error al obtener los juegos');
         }
         const data = await response.json();
-        // Convertir el ID a entero
         const idEntero = parseInt(parametro.id);
-        // Filtrar el juego por el ID obtenido de la URL
         const juegoEncontrado = data.find(juego => juego.id === idEntero);
         if (juegoEncontrado) {
           setJuego(juegoEncontrado);
@@ -39,15 +37,44 @@ const InfoJuegos = () => {
     fetchJuego();
   }, [parametro.id]);
 
-  console.log(juego)
+  const enviarComentario = async () => {
+    try {
+      const response = await fetch('http://localhost:8000/agregarComentario', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          comentario: comentario,
+          juegoId: parametro.id,
+          userId: 1 
+        })
+      });
+      if (!response.ok) {
+        throw new Error('Error al enviar el comentario');
+      }
+      const data = await response.json();
+      console.log(data); 
+      setMostrarExito(true); // Mostrar mensaje de éxito
+      setTimeout(() => {
+        setMostrarExito(false); // Ocultar mensaje de éxito después de 5 segundos
+      }, 5000);
+    } catch (error) {
+      console.error('Error al enviar el comentario:', error);
+    }
+  };
 
-  // Aquí renderizas los detalles del juego
+  const handleEnviarComentario = async () => {
+    if (comentario.trim() !== '') {
+      await enviarComentario();
+      setComentario('');
+    }
+  };
 
   return (
     <>
       <CabeceraGlobal />
       <div className='generalContainer2'>
-        {/* Verifica si juego tiene un valor antes de intentar acceder a sus propiedades */}
         {juego && (
           <div className='information1'>
             <div className='contenedorImagen'>
@@ -60,9 +87,8 @@ const InfoJuegos = () => {
             </div>
           </div>
         )}
-        {/* Renderiza los detalles del juego si juego tiene un valor */}
         {juego && (
-          <div className='information2'>
+          <div className="information2">
             <div>
               <h2>Descripción</h2>
               <p>{juego.descripcion}</p>
@@ -96,27 +122,50 @@ const InfoJuegos = () => {
                 <h2>Valoración</h2>
                 <StarRating rating={juego.valoracion} size={24}></StarRating>
               </div>
-              <div className='añadirComentario'>
-                <h2>¡Añade aquí tu comentario!</h2>
-                <div className='comentarioFinal'>
-                    <textarea alt='comentario' className="comentarioAñadido" maxLength={200} placeholder='Pon el mejor comentario que se te ocurra :D'></textarea>
-                    <div><FontAwesomeIcon className="paper-plane" icon={icon({ name: 'paper-plane', family: 'classic', style: 'solid' })} /></div>
+              {!mostrarExito && (
+                <div className={`añadirComentario ${mostrarExito ? 'fadeOut' : 'fadeIn'}`}>
+                  <h2>¡Añade aquí tu comentario!</h2>
+                  <div className='comentarioFinal'>
+                    <textarea
+                      alt='comentario'
+                      className={`comentarioAñadido ${mostrarExito ? 'fadeOut' : 'fadeIn'}`}
+                      maxLength={200}
+                      placeholder='Pon el mejor comentario que se te ocurra :D'
+                      value={comentario}
+                      onChange={(e) => setComentario(e.target.value)}
+                      onKeyPress={(e) => {
+                        if (e.key === 'Enter') {
+                          handleEnviarComentario();
+                        }
+                      }}
+                    ></textarea>
+                    <div onClick={handleEnviarComentario}><FontAwesomeIcon className="paper-plane" icon={icon({ name: 'paper-plane', family: 'classic', style: 'solid' })} /></div>
+                  </div>
                 </div>
-              </div>
+              )}
+              {mostrarExito && (
+                <div className={`exito ${mostrarExito ? 'fadeIn' : 'fadeOut'}`}>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#00FF00" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="11" fill="none" stroke="#00FF00" strokeWidth="2" />
+                    <path d="M7.5 12.5l3.5 3.5 6-6" strokeWidth="2.5"></path>
+                  </svg>
+                  <h2>¡Comentario enviado con éxito!</h2>
+                </div>
+              )}
             </div>
           </div>
         )}
       </div>
       <div className="footer">
-                <div className="leftFooter">
-                    <Link to="/">Aviso legal</Link>
-                    <Link to="/">Cookies</Link>
-                </div>
-                <div className="rightFooter">
-                    <Link to="/"><img src={logo} alt="logo" className="miniLogo"></img></Link>
-                    <Link to="/" className="sin-subrayado"><h2>NEXOGAMER</h2></Link>
-                </div>
-            </div>
+        <div className="leftFooter">
+          <Link to="/">Aviso legal</Link>
+          <Link to="/">Cookies</Link>
+        </div>
+        <div className="rightFooter">
+          <Link to="/"><img src={logo} alt="logo" className="miniLogo"></img></Link>
+          <Link to="/" className="sin-subrayado"><h2>NEXOGAMER</h2></Link>
+        </div>
+      </div>
     </>
   );
 }
