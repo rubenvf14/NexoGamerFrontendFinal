@@ -219,30 +219,27 @@ body{
 
 /*Filtro de precio de los juegos*/
 
-.precio{
+.precio {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  align-items: center; /* Alinear verticalmente */
+  justify-content: center; /* Alinear horizontalmente */
   font-size: 12pt;
   font-weight: none;
   height: 30px;
 }
 
-.precio p{
-  margin-bottom: 60px;
+.precio p {
+  margin: 0 10px; /* Espacio entre el texto y los input */
 }
 
-.precio input{
-  width: 50px;
+.precio input {
+  width: 50px; /* Ajusta el ancho de los input según tus necesidades */
   text-align: center;
-  margin-left: 10px;
-  margin-right: 10px;
   background-color: #1D1D1D;
   color: white;
   font-size: 12pt;
   border-radius: 5px;
-  padding-left: 5px;
-  box-sizing: border-box;
+  padding: 5px; /* Ajusta el padding según tus necesidades */
   font-family: Kanit;
 }
 
@@ -275,6 +272,3 @@ input[type=number] {
 .fade-in {
   animation: fade-in 0.8s ease;
 }
-
-
-  

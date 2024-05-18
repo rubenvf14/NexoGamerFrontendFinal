@@ -46,7 +46,7 @@ const InfoJuegos = () => {
   return (
     <>
       <CabeceraGlobal />
-      <div className='generalContainer'>
+      <div className='generalContainer2'>
         {/* Verifica si juego tiene un valor antes de intentar acceder a sus propiedades */}
         {juego && (
           <div className='information1'>
@@ -72,8 +72,14 @@ const InfoJuegos = () => {
                   <p className='centrado'>{juego.genero}</p>
                 </div>
                 <div className='plataforma'>
-                  <h2>{juego.consola.includes('/') ? 'Plataformas' : 'Plataforma'}</h2>
-                  <p className='centrado'>{juego.consola}</p>
+                  <div className='plataformas-container'>
+                    <h2>{juego.consola.includes('/') ? 'Plataformas' : 'Plataforma'}</h2>
+                      <div className='plataformas-list'>
+                        {juego.consola.split('/').map((consola, index) => (
+                          <div key={index} className='plataforma-item'>{consola.trim()}</div>
+                        ))}
+                      </div>
+                    </div>
                 </div>
                 <div className='compañia'>
                   <div className="companias-container">

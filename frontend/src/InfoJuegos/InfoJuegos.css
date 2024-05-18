@@ -1,4 +1,4 @@
-.generalContainer{
+.generalContainer2{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -73,13 +73,13 @@ p{
     cursor: pointer;
   }
 
-  .companias-container {
+  .companias-container, .plataformas-container {
     display: flex;
     flex-direction: column;
     text-align: center;
 }
 
-.compania-item {
+.compania-item, .plataformas-item {
     margin-bottom: 5px; /* Ajusta el valor según el espaciado deseado */
 }
 
