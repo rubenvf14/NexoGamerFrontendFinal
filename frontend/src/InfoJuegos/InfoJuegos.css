@@ -1,0 +1,132 @@
+.generalContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: white;
+    font-family: Kanit;
+}
+
+.information1 img{
+    margin-top: 300px;
+    width: 100%;
+}
+
+.information1{
+    width: 40%;
+}
+
+.information2{
+    margin-top: 240px;
+    margin-left: 30px;
+    width: 50%;
+}
+
+.moreInformation{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.contenedorImagen img{
+    border-radius: 10px;
+}
+
+h2{
+    text-align: center;
+    margin: none;
+}
+
+p{
+    margin-top: 0;
+    text-align: justify;
+}
+
+.centrado{
+    text-align: center;
+}
+
+.nombre2, .precio2{
+    margin-top: 0;
+}
+
+/*Etiqueta naranja*/
+
+.contenedorImagen {
+    position: relative; /* Asegura que la posición de la etiqueta sea relativa a este contenedor */
+    display: inline-block; /* Para que el contenedor se ajuste al tamaño de la imagen */
+  }
+  
+  .etiquetaNaranja2 {
+    position: absolute;
+    width: 70px;
+    text-align: center;
+    bottom: 4px; /* Coloca la etiqueta en la parte inferior */
+    left: 0; /* Coloca la etiqueta en la parte izquierda */
+    background-color: #FF5400; /* Color de fondo de la etiqueta */
+    padding: 5px; /* Ajusta el relleno según sea necesario */
+    color: white; /* Color del texto */
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .companias-container {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.compania-item {
+    margin-bottom: 5px; /* Ajusta el valor según el espaciado deseado */
+}
+
+.estrellas{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/*Añadir comentarios*/
+
+.añadirComentario{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.comentarioFinal{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.comentarioAñadido {
+    width: 90%;
+    height: 200px;
+    font-size: 11pt;
+    background-color: #1D1D1D;
+    border: 1px solid #1D1D1D;
+    border-radius: 10px;
+    color: white;
+    font-size: Kanit;
+    padding: 10px;
+    resize: none; /* Evita que el usuario pueda redimensionar el área de texto */
+  }
+
+.paper-plane{
+    margin-left: 20px;
+    font-size: 30pt;
+    cursor: pointer;
+}
+
+/*Pie de página*/
+
+.footer{
+    margin-top: 50px;
+}

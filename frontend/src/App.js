@@ -5,6 +5,7 @@ import JuegosNombre from './JuegosNombre/JuegosNombre';
 import Login from './Login_Register/Login';
 import Register from './Login_Register/Register';
 import Carrito from './Carrito/Carrito';
+import InfoJuegos from './InfoJuegos/InfoJuegos';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path='login' element={<Login></Login>}></Route>
           <Route path='register' element={<Register></Register>}></Route>
           <Route path='carrito' element={<Carrito></Carrito>}></Route>
+          <Route path='juego/:id' element={<InfoJuegos></InfoJuegos>}></Route>
         </Routes>
       </BrowserRouter>
     </div>

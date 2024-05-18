@@ -12,9 +12,11 @@ import valorant_vid from "../trailers/VALORANT.mp4";
 import victory_road_vid from "../trailers/Victory_Road.mp4";
 import f1 from "../trailers/F1_2024.mp4";
 import './JuegoConTrailer.css';
+import { useNavigate } from 'react-router-dom';
 
 const JuegoConTrailer = ({ juego }) => {
     const [reproduciendo, setReproduciendo] = useState(false);
+    const navigate = useNavigate();
 
     const handleMouseEnter = () => {
         setReproduciendo(true);
@@ -23,6 +25,15 @@ const JuegoConTrailer = ({ juego }) => {
     const handleMouseLeave = () => {
         setReproduciendo(false);
     };
+
+    const handleGameImageClick = (id) => {
+        navigate(`/juego/${id}`);
+      };
+      
+      // Función para manejar el clic en el área del trailer
+      const handleTrailerClick = (id) => {
+        navigate(`/juego/${id}`);
+      };
     
     const renderVideo = (nombreJuego) => {
         switch (nombreJuego) {
@@ -56,7 +67,7 @@ const JuegoConTrailer = ({ juego }) => {
     };
 
     return (
-        <div className="juego-container" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+        <div className="juego-container" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={() => handleTrailerClick(juego.id)}>
             {reproduciendo && renderVideo(juego.nombre)}
         </div>
     );

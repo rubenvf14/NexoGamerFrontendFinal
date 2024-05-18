@@ -3,25 +3,21 @@ import './CabeceraJuegos.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
 import JuegoConTrailer from '../JuegoConTrailer/JuegoConTrailer';
+import { useNavigate } from 'react-router-dom';
 
-// Función para filtrar juegos por consola
 function filtrarPorConsola(juegos, consola) {
   return juegos.filter(juego => juego.consola.toLowerCase().includes(consola.toLowerCase()));
 }
 
-// Componente CabeceraJuegos
 function CabeceraJuegos(props) {
-  // Estados
-  const [fondoUrl, setFondoUrl] = useState(''); // URL del fondo
-  const [indiceImagen, setIndiceImagen] = useState(0); // Índice de la imagen actual
-  const [juegos, setJuegos] = useState([]); // Lista de juegos
-  const [opacity, setOpacity] = useState(0); // Opacidad
-  const [reproduciendo, setReproduciendo] = useState(false); // Estado de reproducción
-  const [comentarios, setComentarios] = useState([]); // Lista de comentarios
-  const [primerComentarioIndex, setPrimerComentarioIndex] = useState(0); // Índice del primer comentario
+  const [fondoUrl, setFondoUrl] = useState('');
+  const [indiceImagen, setIndiceImagen] = useState(0);
+  const [juegos, setJuegos] = useState([]);
+  const [opacity, setOpacity] = useState(0);
+  const [reproduciendo, setReproduciendo] = useState(false);
+  const [comentarios, setComentarios] = useState([]);
+  const [primerComentarioIndex, setPrimerComentarioIndex] = useState(0);
 
-
-  // useEffect para cargar los juegos desde el backend al montar el componente
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -43,11 +39,10 @@ function CabeceraJuegos(props) {
         console.error('Error al obtener los juegos del backend:', error);
       }
     };
-  
+
     fetchData();
   }, []);
 
-  // useEffect para cambiar la imagen de fondo cada 5 segundos
   useEffect(() => {
     const intervalId = setInterval(() => {
       if (juegos.length > 0) {
@@ -55,11 +50,10 @@ function CabeceraJuegos(props) {
         setIndiceImagen(nextIndex);
       }
     }, 5000);
-  
+
     return () => clearInterval(intervalId);
   }, [indiceImagen, juegos]);
 
-  // useEffect para cargar la siguiente imagen de fondo
   useEffect(() => {
     if (juegos.length > 0) {
       setOpacity(0);
@@ -67,12 +61,11 @@ function CabeceraJuegos(props) {
         setFondoUrl(juegos[indiceImagen].urlImagen);
         setTimeout(() => {
           setOpacity(1);
-        }, 100); // Ajusta este tiempo según sea necesario
+        }, 100);
       }, 500);
     }
   }, [indiceImagen, juegos]);
 
-  // useEffect para cargar los comentarios desde el backend
   useEffect(() => {
     const fetchComentarios = async () => {
       try {
@@ -86,11 +79,10 @@ function CabeceraJuegos(props) {
         console.error('Error al obtener los comentarios del backend:', error);
       }
     };
-  
+
     fetchComentarios();
   }, []);
 
-  // useEffect para cambiar el índice del primer comentario cada 5 segundos
   useEffect(() => {
     const intervalId = setInterval(() => {
       setPrimerComentarioIndex(prevIndex => {
@@ -102,17 +94,32 @@ function CabeceraJuegos(props) {
     return () => clearInterval(intervalId);
   }, [comentarios]);
 
-  // Filtra los juegos por consola
+  const navigate = useNavigate();
+
   const juegosOrdenador = filtrarPorConsola(juegos, "Ordenador");
   const juegosPlayStation = filtrarPorConsola(juegos, "PlayStation");
   const juegosXbox = filtrarPorConsola(juegos, "Xbox");
   const juegosNintendo = filtrarPorConsola(juegos, "Nintendo Switch");
 
-  // Renderización del componente
+  const handleBackgroundClick = () => {
+    if (juegos.length > 0) {
+      const juegoActual = juegos[indiceImagen];
+      navigate(`/juego/${juegoActual.id}`);
+    }
+  };
+
+  const handleGameImageClick = (id) => {
+    navigate(`/juego/${id}`);
+  };
+
+  const handleClick = (id) => {
+    navigate(`/juego/${id}`);
+  };
+
   return (
     <>
       <div className='cabeceraJuegos'>
-        <div className='fondo-container'>
+        <div className='fondo-container' onClick={handleBackgroundClick}>
           <img
             src={fondoUrl}
             alt='imagen'
@@ -124,7 +131,10 @@ function CabeceraJuegos(props) {
             {juegos.map((juego, index) => (
               <button
                 key={juego.id}
-                onClick={() => setIndiceImagen(index)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIndiceImagen(index);
+                }}
                 className={indiceImagen === index ? 'boton-activo' : 'boton-inactivo'}
               />
             ))}
@@ -134,12 +144,11 @@ function CabeceraJuegos(props) {
       <div className="generalBody">
         <h1 className='tendencias'>Tendencias <FontAwesomeIcon className="flecha" icon={icon({ name: 'chevron-right', family: 'classic', style: 'solid' })} /></h1>
         <div className="carteleraJuegos">
-          {/* Renderiza la lista de juegos */}
           {juegos.map((juego, key) => (
             <div className='juego' key={key}>
               <div className='miniCartelera' onMouseEnter={() => setReproduciendo(true)} onMouseLeave={() => setReproduciendo(false)}>
                 {reproduciendo && <JuegoConTrailer juego={juego} />}
-                <div className='contenedorImagen'>
+                <div className='contenedorImagen' onClick={() => handleGameImageClick(juego.id)}>
                   <img src={juego.urlImagen} alt='foto' className='miniCarteleras'></img>
                   {juego.rebaja !== 0 && <div className='etiquetaNaranja'>-{juego.rebaja}%</div>}
                 </div>
@@ -153,107 +162,101 @@ function CabeceraJuegos(props) {
         </div>
       </div>
       <div className='comentarios' ref={props.ordenadorRef}>
-        {/* Renderiza los comentarios */}
         {comentarios.slice(primerComentarioIndex, primerComentarioIndex + 5).map((comentario, index) => (
           <div key={index} className={`comentario`}>
-              <div className='infoComentarios'>
-                <div className='circulo'>
-                  <FontAwesomeIcon className="user2" icon={icon({ name: 'user', family: 'classic', style: 'solid' })} />
-                </div>
-                <h3 className='tituloJuego'>{comentario.juegoNombre.length > 21 ? comentario.juegoNombre.substring(0, 21) + '...' : comentario.juegoNombre}</h3>
+            <div className='infoComentarios'>
+              <div className='circulo'>
+                <FontAwesomeIcon className="user2" icon={icon({ name: 'user', family: 'classic', style: 'solid' })} />
               </div>
-              <p>{comentario.comentario}</p>
+              <h3 className='tituloJuego'>{comentario.juegoNombre.length > 21 ? comentario.juegoNombre.substring(0, 21) + '...' : comentario.juegoNombre}</h3>
+            </div>
+            <p>{comentario.comentario}</p>
+          </div>
+        ))}
+      </div>
+      <div className='generalBody'>
+        <h1 className='tendencias'>Ordenador <FontAwesomeIcon className="flecha" icon={icon({ name: 'chevron-right', family: 'classic', style: 'solid' })} /></h1>
+        <div className="carteleraJuegos">
+          {juegosOrdenador.map((juego, key) => (
+            <div className='juego' key={key}>
+              <div className='miniCartelera' onMouseEnter={() => setReproduciendo(true)} onMouseLeave={() => setReproduciendo(false)}>
+                {reproduciendo && <JuegoConTrailer juego={juego} />}
+                <div className='contenedorImagen' onClick={() => handleGameImageClick(juego.id)}>
+                  <img src={juego.urlImagen} alt='foto' className='miniCarteleras'></img>
+                  {juego.rebaja !== 0 && <div className='etiquetaNaranja'>-{juego.rebaja}%</div>}
+                </div>
+              </div>
+              <div className='texto'>
+                <p className='nombre'>{juego.nombre.length > 20 ? juego.nombre.substring(0, 20) + '...' : juego.nombre}</p>
+                {juego.precio === "0.00" ? <p className="precio">Gratuito</p> : <p className="precio">{(juego.precio - (juego.precio * (juego.rebaja / 100))).toFixed(2)}€</p>}
+              </div>
+            </div>
+          ))}
+          <div ref={props.playstationRef}></div>
+        </div>
+      </div>
+      <div className='generalBody'>
+        <h1 className='tendencias'>PlayStation <FontAwesomeIcon className="flecha" icon={icon({ name: 'chevron-right', family: 'classic', style: 'solid' })} /></h1>
+        <div className="carteleraJuegos">
+          {juegosPlayStation.map((juego, key) => (
+            <div className='juego' key={key}>
+              <div className='miniCartelera' onMouseEnter={() => setReproduciendo(true)} onMouseLeave={() => setReproduciendo(false)}>
+                {reproduciendo && <JuegoConTrailer juego={juego} />}
+                <div className='contenedorImagen' onClick={() => handleGameImageClick(juego.id)}>
+                  <img src={juego.urlImagen} alt='foto' className='miniCarteleras'></img>
+                  {juego.rebaja !== 0 && <div className='etiquetaNaranja'>-{juego.rebaja}%</div>}
+                </div>
+              </div>
+              <div className='texto'>
+                <p className='nombre'>{juego.nombre.length > 20 ? juego.nombre.substring(0, 20) + '...' : juego.nombre}</p>
+                {juego.precio === "0.00" ? <p className="precio">Gratuito</p> : <p className="precio">{(juego.precio - (juego.precio * (juego.rebaja / 100))).toFixed(2)}€</p>}
+              </div>
+            </div>
+          ))}
+          <div ref={props.xboxRef}></div>
+        </div>
+      </div>
+      <div className='generalBody'>
+        <h1 className='tendencias'>Xbox <FontAwesomeIcon className="flecha" icon={icon({ name: 'chevron-right', family: 'classic', style: 'solid' })} /></h1>
+        <div className="carteleraJuegos">
+          {juegosXbox.map((juego, key) => (
+            <div className='juego' key={key}>
+              <div className='miniCartelera' onMouseEnter={() => setReproduciendo(true)} onMouseLeave={() => setReproduciendo(false)}>
+                {reproduciendo && <JuegoConTrailer juego={juego} />}
+                <div className='contenedorImagen' onClick={() => handleGameImageClick(juego.id)}>
+                  <img src={juego.urlImagen} alt='foto' className='miniCarteleras'></img>
+                  {juego.rebaja !== 0 && <div className='etiquetaNaranja'>-{juego.rebaja}%</div>}
+                </div>
+              </div>
+              <div className='texto'>
+                <p className='nombre'>{juego.nombre.length > 20 ? juego.nombre.substring(0, 20) + '...' : juego.nombre}</p>
+                {juego.precio === "0.00" ? <p className="precio">Gratuito</p> : <p className="precio">{(juego.precio - (juego.precio * (juego.rebaja / 100))).toFixed(2)}€</p>}
+              </div>
+            </div>
+          ))}
+          <div ref={props.nintendoRef}></div>
+        </div>
+      </div>
+      <div className='generalBody'>
+        <h1 className='tendencias'>Nintendo Switch <FontAwesomeIcon className="flecha" icon={icon({ name: 'chevron-right', family: 'classic', style: 'solid' })} /></h1>
+        <div className="carteleraJuegos">
+          {juegosNintendo.map((juego, key) => (
+            <div className='juego' key={key}>
+              <div className='miniCartelera' onMouseEnter={() => setReproduciendo(true)} onMouseLeave={() => setReproduciendo(false)}>
+                {reproduciendo && <JuegoConTrailer juego={juego} />}
+                <div className='contenedorImagen' onClick={() => handleGameImageClick(juego.id)}>
+                  <img src={juego.urlImagen} alt='foto' className='miniCarteleras'></img>
+                  {juego.rebaja !== 0 && <div className='etiquetaNaranja'>-{juego.rebaja}%</div>}
+                </div>
+              </div>
+              <div className='texto'>
+                <p className='nombre'>{juego.nombre.length > 20 ? juego.nombre.substring(0, 20) + '...' : juego.nombre}</p>
+                {juego.precio === "0.00" ? <p className="precio">Gratuito</p> : <p className="precio">{(juego.precio - (juego.precio * (juego.rebaja / 100))).toFixed(2)}€</p>}
+              </div>
             </div>
           ))}
         </div>
-        {/* Renderiza la sección de juegos por consola */}
-        <div className='generalBody'>
-          <h1 className='tendencias'>Ordenador <FontAwesomeIcon className="flecha" icon={icon({ name: 'chevron-right', family: 'classic', style: 'solid' })} /></h1>
-          <div className="carteleraJuegos">
-            {/* Renderiza los juegos de ordenador */}
-            {juegosOrdenador.map((juego, key) => (
-              <div className='juego' key={key}>
-                <div className='miniCartelera' onMouseEnter={() => setReproduciendo(true)} onMouseLeave={() => setReproduciendo(false)}>
-                  {reproduciendo && <JuegoConTrailer juego={juego} />}
-                  <div className='contenedorImagen'>
-                    <img src={juego.urlImagen} alt='foto' className='miniCarteleras'></img>
-                    {juego.rebaja !== 0 && <div className='etiquetaNaranja'>-{juego.rebaja}%</div>}
-                  </div>
-                </div>
-                <div className='texto'>
-                  <p className='nombre'>{juego.nombre.length > 20 ? juego.nombre.substring(0, 20) + '...' : juego.nombre}</p>
-                  {juego.precio === "0.00" ? <p className="precio">Gratuito</p> : <p className="precio">{(juego.precio - (juego.precio * (juego.rebaja / 100))).toFixed(2)}€</p>}
-                </div>
-              </div>
-            ))}
-            <div ref={props.playstationRef}></div>
-          </div>
-        </div>
-        <div className='generalBody'>
-          <h1 className='tendencias'>PlayStation <FontAwesomeIcon className="flecha" icon={icon({ name: 'chevron-right', family: 'classic', style: 'solid' })} /></h1>
-          <div className="carteleraJuegos">
-            {/* Renderiza los juegos de PlayStation */}
-            {juegosPlayStation.map((juego, key) => (
-              <div className='juego' key={key}>
-                <div className='miniCartelera' onMouseEnter={() => setReproduciendo(true)} onMouseLeave={() => setReproduciendo(false)}>
-                  {reproduciendo && <JuegoConTrailer juego={juego} />}
-                  <div className='contenedorImagen'>
-                    <img src={juego.urlImagen} alt='foto' className='miniCarteleras'></img>
-                    {juego.rebaja !== 0 && <div className='etiquetaNaranja'>-{juego.rebaja}%</div>}
-                  </div>
-                </div>
-                <div className='texto'>
-                  <p className='nombre'>{juego.nombre.length > 20 ? juego.nombre.substring(0, 20) + '...' : juego.nombre}</p>
-                  {juego.precio === "0.00" ? <p className="precio">Gratuito</p> : <p className="precio">{(juego.precio - (juego.precio * (juego.rebaja / 100))).toFixed(2)}€</p>}
-                </div>
-              </div>
-            ))}
-            <div ref={props.xboxRef}></div>
-          </div>
-        </div>
-        <div className='generalBody'>
-          <h1 className='tendencias'>Xbox <FontAwesomeIcon className="flecha" icon={icon({ name: 'chevron-right', family: 'classic', style: 'solid' })} /></h1>
-          <div className="carteleraJuegos">
-            {/* Renderiza los juegos de Xbox */}
-            {juegosXbox.map((juego, key) => (
-              <div className='juego' key={key}>
-                <div className='miniCartelera' onMouseEnter={() => setReproduciendo(true)} onMouseLeave={() => setReproduciendo(false)}>
-                  {reproduciendo && <JuegoConTrailer juego={juego} />}
-                  <div className='contenedorImagen'>
-                    <img src={juego.urlImagen} alt='foto' className='miniCarteleras'></img>
-                    {juego.rebaja !== 0 && <div className='etiquetaNaranja'>-{juego.rebaja}%</div>}
-                  </div>
-                </div>
-                <div className='texto'>
-                  <p className='nombre'>{juego.nombre.length > 20 ? juego.nombre.substring(0, 20) + '...' : juego.nombre}</p>
-                  {juego.precio === "0.00" ? <p className="precio">Gratuito</p> : <p className="precio">{(juego.precio - (juego.precio * (juego.rebaja / 100))).toFixed(2)}€</p>}
-                </div>
-              </div>
-            ))}
-            <div ref={props.nintendoRef}></div>
-          </div>
-        </div>
-        <div className='generalBody'>
-          <h1 className='tendencias'>Nintendo Switch <FontAwesomeIcon className="flecha" icon={icon({ name: 'chevron-right', family: 'classic', style: 'solid' })} /></h1>
-          <div className="carteleraJuegos">
-            {/* Renderiza los juegos de Nintendo */}
-            {juegosNintendo.map((juego, key) => (
-              <div className='juego' key={key}>
-                <div className='miniCartelera' onMouseEnter={() => setReproduciendo(true)} onMouseLeave={() => setReproduciendo(false)}>
-                  {reproduciendo && <JuegoConTrailer juego={juego} />}
-                  <div className='contenedorImagen'>
-                    <img src={juego.urlImagen} alt='foto' className='miniCarteleras'></img>
-                    {juego.rebaja !== 0 && <div className='etiquetaNaranja'>-{juego.rebaja}%</div>}
-                  </div>
-                </div>
-                <div className='texto'>
-                  <p className='nombre'>{juego.nombre.length > 20 ? juego.nombre.substring(0, 20) + '...' : juego.nombre}</p>
-                  {juego.precio === "0.00" ? <p className="precio">Gratuito</p> : <p className="precio">{(juego.precio - (juego.precio * (juego.rebaja / 100))).toFixed(2)}€</p>}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+      </div>
     </>
   );
 }
