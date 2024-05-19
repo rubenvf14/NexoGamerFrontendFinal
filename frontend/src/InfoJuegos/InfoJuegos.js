@@ -48,7 +48,7 @@ const InfoJuegos = () => {
         body: JSON.stringify({
           comentario: comentario,
           juegoId: parametro.id,
-          userId: 100
+          userId: 1
         })
       });
       if (!response.ok) {
