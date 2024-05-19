@@ -3,7 +3,7 @@ import "./LoginRegister.css";
 import logo from "../nexoGamerFinal.png";
 import { Link } from "react-router-dom";
 import fondo from "./fondo/fondo.mp4";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro'
 
 const Register = () => {
@@ -43,7 +43,7 @@ const Register = () => {
         };
         fetch('http://localhost:8000/register', requestOptions)
             .then(response => {
-                if (response.status === 201) {
+                if (response.ok) {
                     setFormularioEnviado(true);
                     setTimeout(() => setFormularioEnviado(false), 5000); // Después de 5 segundos, vuelve a establecer el formularioEnviado en falso
                     setFormData({
@@ -53,11 +53,11 @@ const Register = () => {
                         telefono: "",
                         email: ""
                     }); // Limpiar los campos del formulario
+                } else {
+                    throw new Error('No se pudo registrar el usuario');
                 }
-                return response.json();
             })
-            .then(data => console.log(data));
-        // Aquí podrías manejar la respuesta del servidor como desees
+            .catch(error => console.error('Error al registrar usuario:', error));
     };
 
     useEffect(() => {
